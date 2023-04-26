@@ -1,3 +1,5 @@
+import 'package:desing_01/Screens/first_page.dart';
+import 'package:desing_01/Screens/second_page.dart';
 import 'package:flutter/material.dart';
 
 void main() => runApp(const MyApp());
@@ -8,15 +10,13 @@ class MyApp extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return MaterialApp(
+      debugShowCheckedModeBanner: false,
       title: 'Material App',
-      home: Scaffold(
-        appBar: AppBar(
-          title: const Text('Material App Bar'),
-        ),
-        body: const Center(
-          child: Text('Hello World'),
-        ),
-      ),
+      initialRoute: '/',
+      routes: {
+        '/': (context) => const FirstPage(),
+        '/second': (context) => const SecondPage()
+      },
     );
   }
 }
