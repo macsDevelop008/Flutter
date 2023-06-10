@@ -16,6 +16,15 @@ class StatusPage extends StatelessWidget {
           ],
         ),
       ),
+      floatingActionButton: FloatingActionButton(
+          child: Icon(Icons.message_sharp),
+          onPressed: () {
+            //Aquí se llama al provider socket y por medio del get se llama el
+            //emit el cual permite emitir el metodo llamado 'emitir-mensaje'
+            //y como parametro se le pasa ese objeto o json de datos
+            socketProvider.socket.emit('emitir-mensaje',
+                {'nombre': 'fluter', 'mensaje': 'Hola desde fluter'});
+          }),
     );
   }
 }

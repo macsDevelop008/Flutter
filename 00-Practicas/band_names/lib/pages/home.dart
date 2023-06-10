@@ -4,6 +4,9 @@ import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 
 import 'package:band_names/models/band.dart';
+import 'package:provider/provider.dart';
+
+import '../providers/socket_provider.dart';
 
 class HomePage extends StatefulWidget {
   static const route = 'home';
@@ -21,8 +24,15 @@ class _HomePageState extends State<HomePage> {
   ];
   @override
   Widget build(BuildContext context) {
+    final socketProvider = Provider.of<SockectProvider>(context);
     return Scaffold(
       appBar: AppBar(
+        actions: [
+          Container(
+            margin: EdgeInsets.only(right: 10),
+            child: _iconStatus(socketProvider),
+          )
+        ],
         elevation: 1,
         title: Text(
           'Band Names',
@@ -43,6 +53,25 @@ class _HomePageState extends State<HomePage> {
         child: Icon(Icons.add),
       ),
     );
+  }
+
+  Icon _iconStatus(SockectProvider socket) {
+    if (socket.serverStatus == ServerStatus.Connectiong) {
+      return Icon(
+        Icons.local_hotel_rounded,
+        color: Colors.orange[300],
+      );
+    } else if (socket.serverStatus == ServerStatus.Online) {
+      return Icon(
+        Icons.check_circle,
+        color: Colors.blue[300],
+      );
+    } else {
+      return Icon(
+        Icons.offline_bolt,
+        color: Colors.red[300],
+      );
+    }
   }
 
   Widget _bandTile(Band band) => Dismissible(

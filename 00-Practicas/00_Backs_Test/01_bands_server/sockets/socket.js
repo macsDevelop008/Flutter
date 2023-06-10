@@ -15,6 +15,8 @@ io.on('connection', client => {
         io.emit( 'mensaje', { admin: 'Nuevo mensaje' } );
 
     });
-
+    client.on('emitir-mensaje', (data) =>{
+        io.emit('nuevo-mensaje', data);
+    });
 
 });

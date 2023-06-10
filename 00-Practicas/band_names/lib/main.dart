@@ -22,7 +22,7 @@ class MyApp extends StatelessWidget {
       child: MaterialApp(
         debugShowCheckedModeBanner: false,
         title: 'Material App',
-        initialRoute: StatusPage.route,
+        initialRoute: HomePage.route,
         routes: {
           HomePage.route: (_) => HomePage(),
           StatusPage.route: (_) => StatusPage()
