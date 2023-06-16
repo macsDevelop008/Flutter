@@ -11,7 +11,7 @@ class SockectProvider with ChangeNotifier {
   late Socket _socket;
 
   ServerStatus get serverStatus => this._serverStatus;
-  Socket get socket => this.socket;
+  Socket get socket => this._socket;
 
   SockectProvider() {
     this._initiConfig();

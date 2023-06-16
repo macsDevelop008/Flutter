@@ -16,12 +16,28 @@ class HomePage extends StatefulWidget {
 }
 
 class _HomePageState extends State<HomePage> {
-  final List<Band> bands = [
-    Band(id: '1', name: 'Metalica', votes: 5),
-    Band(id: '2', name: 'Queen', votes: 4),
-    Band(id: '3', name: 'Kiss', votes: 3),
-    Band(id: '4', name: 'Bon Jovi', votes: 2),
-  ];
+  late List<Band> bands = List.empty();
+
+  @override
+  void initState() {
+    // TODO: implement initState
+    final socketProvider = Provider.of<SockectProvider>(context, listen: false);
+    socketProvider.socket.on('active-bands', (data) {
+      print(data);
+      this.bands = (data as List).map((band) => Band.fromMap(band)).toList();
+    });
+    setState(() {});
+    super.initState();
+  }
+
+  @override
+  void dispose() {
+    // TODO: implement dispose
+    final socketProvider = Provider.of<SockectProvider>(context, listen: false);
+    socketProvider.socket.off('active-bands');
+    super.dispose();
+  }
+
   @override
   Widget build(BuildContext context) {
     final socketProvider = Provider.of<SockectProvider>(context);
@@ -74,37 +90,44 @@ class _HomePageState extends State<HomePage> {
     }
   }
 
-  Widget _bandTile(Band band) => Dismissible(
-        key: Key(band.id),
-        direction: DismissDirection.startToEnd,
-        onDismissed: (direction) {
-          print(direction);
-          //TODO: Llamar el borrado en el server
+  Widget _bandTile(Band band) {
+    final socketProvider = Provider.of<SockectProvider>(context, listen: false);
+    return Dismissible(
+      key: Key(band.id),
+      direction: DismissDirection.startToEnd,
+      onDismissed: (direction) {
+        print(direction);
+        //TODO: Llamar el borrado en el server
+      },
+      background: Container(
+        color: Colors.red,
+        padding: EdgeInsets.only(left: 8.0),
+        child: Align(
+          alignment: Alignment.centerLeft,
+          child: Text(
+            'Delete Band',
+            style: TextStyle(color: Colors.white),
+          ),
+        ),
+      ),
+      child: ListTile(
+        leading: CircleAvatar(
+          child: Text(band.name.substring(0, 2)),
+          backgroundColor: Colors.blue[100],
+        ),
+        title: Text(band.name),
+        trailing: Text(
+          '${band.votes}',
+          style: TextStyle(fontSize: 20),
+        ),
+        onTap: () {
+          socketProvider.socket.emit('vote-band', {'id': band.id});
+          setState(() {});
         },
-        background: Container(
-          color: Colors.red,
-          padding: EdgeInsets.only(left: 8.0),
-          child: Align(
-            alignment: Alignment.centerLeft,
-            child: Text(
-              'Delete Band',
-              style: TextStyle(color: Colors.white),
-            ),
-          ),
-        ),
-        child: ListTile(
-          leading: CircleAvatar(
-            child: Text(band.name.substring(0, 2)),
-            backgroundColor: Colors.blue[100],
-          ),
-          title: Text(band.name),
-          trailing: Text(
-            '${band.votes}',
-            style: TextStyle(fontSize: 20),
-          ),
-          onTap: () {},
-        ),
-      );
+      ),
+    );
+  }
+
   void _addNewBand() {
     final textController = TextEditingController();
     if (Platform.isAndroid) {
@@ -158,10 +181,10 @@ class _HomePageState extends State<HomePage> {
   }
 
   void addBandToList(String name) {
+    final socketProvider = Provider.of<SockectProvider>(context, listen: false);
+
     if (name.length > 1) {
-      this
-          .bands
-          .add(new Band(id: DateTime.now().toString(), name: name, votes: 1));
+      socketProvider.socket.emit('add-band', {'name': name});
       setState(() {});
     }
 

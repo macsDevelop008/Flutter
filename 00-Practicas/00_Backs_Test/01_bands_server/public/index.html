@@ -22,15 +22,19 @@
         });
 
 
-        socket.emit('mensaje', { nombre: 'Miguel' } );
-
-        socket.on('mensaje', function( payload ){
-            console.log('Escuhando:', payload );
-        });
+        socket.emit('mensaje', { nombre: 'Fernando' } );
 
         socket.on('nuevo-mensaje', function( payload ){
             console.log('Escuhando:', payload );
         });
+
+        socket.on('active-bands', function( bands ){
+            console.clear();
+            console.table( bands );
+        });
+
+
+
 
     </script>
 
