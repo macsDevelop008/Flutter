@@ -39,6 +39,10 @@ dependencies:
   flutter_blurhash: ^0.7.0
   carousel_slider: ^4.2.1
   provider: ^6.0.5
+  path_provider: ^2.0.15
+  sqflite: ^2.2.8+4
+  http: ^0.13.6
+  intl: ^0.18.1
 
 dev_dependencies:
   flutter_test:

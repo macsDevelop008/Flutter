@@ -3,15 +3,13 @@ import 'package:flutter/material.dart';
 class MainWeatherImageDataWidget extends StatelessWidget {
   final Widget mainImageWeather;
   final int degreesAverage; //Grados Promedio
-  final int degreesTo; //Grados de
-  final int degreesFrom; //Grados hasta
+  final int clouds; //Nubes
 
   const MainWeatherImageDataWidget({
     super.key,
     required this.mainImageWeather,
     required this.degreesAverage,
-    required this.degreesTo,
-    required this.degreesFrom,
+    required this.clouds,
   });
 
   @override
@@ -38,7 +36,7 @@ class MainWeatherImageDataWidget extends StatelessWidget {
           ),
         ),
         Text(
-          '$degreesFrom°C ~ $degreesTo°C',
+          'Cobertura Nubes: $clouds %',
           style: const TextStyle(fontSize: 16),
         ),
       ],

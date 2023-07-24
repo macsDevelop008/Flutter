@@ -16,7 +16,7 @@ class MainWeatherDrawerItem extends StatelessWidget {
       margin: const EdgeInsets.symmetric(vertical: 5),
       color: Colors.transparent,
       width: double.infinity,
-      height: 80,
+      height: 60,
       child: Row(
         children: [
           Padding(

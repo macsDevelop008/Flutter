@@ -83,43 +83,84 @@ class WeatherScreen extends StatelessWidget {
             Row(
               crossAxisAlignment: CrossAxisAlignment.start,
               children: [
-                Container(
-                  width: 310,
-                  height: size.height * 0.91,
-                  margin: const EdgeInsets.only(left: 15, top: 15, bottom: 10),
-                  decoration: const BoxDecoration(
-                      color: Color.fromARGB(255, 222, 236, 255),
-                      borderRadius: BorderRadius.only(
-                          topLeft: Radius.circular(18),
-                          bottomLeft: Radius.circular(18))),
-                  child: ListView.builder(
-                    physics: BouncingScrollPhysics(),
-                    itemCount: 50,
-                    itemBuilder: (BuildContext context, int index) {
-                      return MainWeatherDrawerItem(
-                        customIcon: SvgPicture.asset(
-                          'assets/image/svg/Icon/Icono_Nube_Sol.svg',
-                          width: 50,
-                        ),
-                        dregress: '32',
-                        place: 'TOKYO',
-                      );
-                    },
-                  ),
-                ),
-                Container(
-                  margin: const EdgeInsets.only(top: 25, left: 18),
-                  child: IconButton(
-                      onPressed: () {},
-                      icon: const Icon(
-                        Icons.close,
-                        size: 30,
-                      )),
-                )
+                //Listado
+                _listDrawer(size),
+                //Acciones
+                _actions(context),
               ],
             ),
           ],
         ),
+      ),
+    );
+  }
+
+  Column _actions(BuildContext context) {
+    return Column(
+      children: [
+        Container(
+          margin: const EdgeInsets.only(top: 25, left: 15),
+          child: IconButton(
+              onPressed: () {
+                Navigator.pop(context);
+              },
+              icon: const Icon(
+                Icons.close,
+                size: 30,
+              )),
+        ),
+        Padding(
+          padding: const EdgeInsets.only(top: 20, left: 18),
+          child: Container(
+            height: 50,
+            width: 50,
+            decoration: BoxDecoration(
+                color: const Color.fromARGB(255, 244, 247, 252),
+                shape: BoxShape.circle,
+                boxShadow: [
+                  BoxShadow(
+                      color: Color.fromARGB(255, 222, 236, 255),
+                      offset: Offset(2, 0),
+                      blurRadius: 5,
+                      spreadRadius: 1)
+                ]),
+            child: IconButton(
+              icon: Icon(
+                Icons.add,
+                size: 35,
+              ),
+              onPressed: () {},
+            ),
+          ),
+        ),
+        //Switch
+        //Switch(value: true, thumbIcon: _thumbIcon(), onChanged: (value) {})
+      ],
+    );
+  }
+
+  Container _listDrawer(Size size) {
+    return Container(
+      width: 310,
+      height: size.height * 0.91,
+      margin: const EdgeInsets.only(left: 15, top: 15, bottom: 10),
+      decoration: const BoxDecoration(
+          color: Color.fromARGB(255, 222, 236, 255),
+          borderRadius: BorderRadius.only(
+              topLeft: Radius.circular(18), bottomLeft: Radius.circular(18))),
+      child: ListView.builder(
+        physics: const BouncingScrollPhysics(),
+        itemCount: 50,
+        itemBuilder: (BuildContext context, int index) {
+          return MainWeatherDrawerItem(
+            customIcon: SvgPicture.asset(
+              'assets/image/svg/Icon/Icono_Nube_Sol.svg',
+              width: 50,
+            ),
+            dregress: '32',
+            place: 'TOKYO',
+          );
+        },
       ),
     );
   }

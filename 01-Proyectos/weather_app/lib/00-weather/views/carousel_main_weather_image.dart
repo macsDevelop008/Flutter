@@ -1,6 +1,9 @@
 import 'package:carousel_slider/carousel_slider.dart';
 import 'package:flutter/material.dart';
+import 'package:intl/intl.dart';
+import 'package:weather_app/00-weather/models/models.dart';
 
+import '../services/services.dart';
 import '../ui/ui.dart';
 import '../widgets/widgets.dart';
 
@@ -10,28 +13,19 @@ class CarouselMainWeatherImageView extends StatelessWidget {
   final List<MainWeatherImageDataWidget> testList = [
     MainWeatherImageDataWidget(
       degreesAverage: 30,
-      degreesFrom: 13,
-      degreesTo: 15,
       mainImageWeather: sunCloud(),
-    ),
-    MainWeatherImageDataWidget(
-      degreesAverage: 20,
-      degreesFrom: 10,
-      degreesTo: 53,
-      mainImageWeather: rayCloud(),
+      clouds: 90,
     ),
     MainWeatherImageDataWidget(
       degreesAverage: 30,
-      degreesFrom: 21,
-      degreesTo: 32,
-      mainImageWeather: rainCloud(),
+      mainImageWeather: aloneCloud(),
+      clouds: 90,
     ),
     MainWeatherImageDataWidget(
-      degreesAverage: 10,
-      degreesFrom: 23,
-      degreesTo: 31,
-      mainImageWeather: aloneCloud(),
-    )
+      degreesAverage: 30,
+      mainImageWeather: rayCloud(),
+      clouds: 90,
+    ),
   ];
 
   final CarouselController carouselController = CarouselController();
@@ -44,12 +38,21 @@ class CarouselMainWeatherImageView extends StatelessWidget {
         mainAxisAlignment: MainAxisAlignment.center,
         crossAxisAlignment: CrossAxisAlignment.center,
         children: [
+          //L
           IconButton(
-              onPressed: () {
-                print(carouselController);
+              onPressed: () async {
+                /*var api = await Api.getInstance();
+                var r = await api.historyHours(
+                    dataModel: BasicPlaceModel('3.765585', '-75.900528'));
+                print('ñññ: ${r!.listDataWeatherHours[1].time}');*/
+
+                /*await LocalDatabase.db.database;
+                print(LocalDatabase.db
+                    .insertPlace(BasicPlaceModel('-5.742296', '-64.288766')));*/
               },
               icon: const Icon(Icons.chevron_left)),
           SizedBox(width: 280, height: 220, child: _carouselSlider()),
+          //R
           IconButton(onPressed: () {}, icon: const Icon(Icons.chevron_right)),
         ],
       ),
