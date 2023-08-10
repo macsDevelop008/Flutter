@@ -31,11 +31,12 @@ class DataWeatherHourDayModel {
   DataWeatherHourDayModel(this._time, this._percentage, this._customIcon);
 
   factory DataWeatherHourDayModel.fromJson(Map<String, dynamic> data) {
+    //print(data['clouds']);
     var time = data['datetime'].toString().split(':');
     var timeResult = '${time[1]}:00';
 
-    var customIcon =
-        formatCustomIconWeather(data['weather']['code'].toString());
+    var customIcon = formatCustomIconWeather(data['weather']['code'].toString(),
+        width: 48, isIcon: true);
     return DataWeatherHourDayModel(
         timeResult, data['clouds'].toString(), customIcon);
   }

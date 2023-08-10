@@ -38,8 +38,10 @@ class DataWeatherHistoryDayModel {
   factory DataWeatherHistoryDayModel.fromJson(Map<String, dynamic> data) {
     String day = formatDay(data['datetime'].toString());
 
-    Widget customIcon =
-        formatCustomIconWeather(data['weather']['code'].toString());
+    Widget customIcon = formatCustomIconWeather(
+        data['weather']['code'].toString(),
+        width: 43,
+        isIcon: true);
 
     return DataWeatherHistoryDayModel(day, data['app_min_temp'].toString(),
         data['app_max_temp'].toString(), customIcon, data['clouds'].toString());

@@ -44,3 +44,33 @@ Widget aloneCloud({double width = 200}) {
     width: width,
   );
 }
+
+//Iconos---
+
+Widget iconRayCloud({double width = 200}) {
+  return SvgPicture.asset(
+    'assets/image/svg/Icon/Icono_Nube_Rayo.svg',
+    width: width,
+  );
+}
+
+Widget iconRainCloud({double width = 200}) {
+  return SvgPicture.asset(
+    'assets/image/svg/Icon/Icono_Nube_Lluvia.svg',
+    width: width,
+  );
+}
+
+Widget iconSunCloud({double width = 200}) {
+  return SvgPicture.asset(
+    'assets/image/svg/Icon/Icono_Nube_Sol.svg',
+    width: width,
+  );
+}
+
+Widget iconAloneCloud({double width = 200}) {
+  return SvgPicture.asset(
+    'assets/image/svg/Icon/Icono_Nube_Sola.svg',
+    width: width,
+  );
+}

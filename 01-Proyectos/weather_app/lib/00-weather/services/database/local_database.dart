@@ -33,7 +33,6 @@ class LocalDatabase {
 
       ''');
     });
-    //insertPlace(BasicPlaceModel('4.438315', '-75.198871'));
     return result;
   }
 
@@ -54,13 +53,24 @@ class LocalDatabase {
   Future<List<BasicPlaceModel>?> getAllPlaces() async {
     try {
       final db = await database;
-      final res = await db.query('palces');
+      final res = await db.query('places');
       return res.isNotEmpty
           ? res.map((p) => BasicPlaceModel.fromJson(p)).toList()
           : null;
     } catch (e) {
       print('Error al listar: $e');
       return null;
+    }
+  }
+
+  Future<bool> checkExist({required BasicPlaceModel data}) async {
+    try {
+      final db = await database;
+      final res = await db.query('places',
+          where: 'lat = ? and lon = ?', whereArgs: [data.lat, data.lon]);
+      return res.isNotEmpty;
+    } catch (e) {
+      return false;
     }
   }
 }

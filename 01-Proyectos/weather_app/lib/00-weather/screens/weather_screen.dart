@@ -1,19 +1,37 @@
+import 'package:animate_do/animate_do.dart';
+import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/svg.dart';
+import 'package:provider/provider.dart';
+import 'package:weather_app/00-weather/screens/add_country_screen.dart';
+import '../services/services.dart';
+import '../ui/ui.dart';
 import '../views/views.dart';
 import '../widgets/widgets.dart';
 
 class WeatherScreen extends StatelessWidget {
   static const String route = 'weather_screen';
+  const WeatherScreen({super.key});
 
   @override
   Widget build(BuildContext context) {
-    final theme = Theme.of(context);
-
+    final info = Provider.of<WeatherMainProvider>(context, listen: false);
     return Scaffold(
       backgroundColor: const Color.fromARGB(255, 244, 247, 252),
-      appBar: _appBar(),
-      drawer: _drawer(context),
+      body: (info.carouselData == null || info.carouselData!.isEmpty)
+          ? const Center(
+              child: Text('No hay información'),
+            )
+          : _bodyMain(context),
+    );
+  }
+
+  Scaffold _bodyMain(BuildContext context) {
+    var data = Provider.of<WeatherMainProvider>(context);
+    return Scaffold(
+      backgroundColor: const Color.fromARGB(255, 244, 247, 252),
+      appBar: _appBar(data, context),
+      drawer: _drawer(context, data),
       body: Center(
         child: SafeArea(
           child: Padding(
@@ -21,8 +39,8 @@ class WeatherScreen extends StatelessWidget {
             child: Column(
               children: [
                 CarouselMainWeatherImageView(),
-                DataIconsHorizontalView(),
-                DataIconsVerticalVertical()
+                const DataIconsHorizontalView(),
+                const DataIconsVerticalVertical()
               ],
             ),
           ),
@@ -31,22 +49,34 @@ class WeatherScreen extends StatelessWidget {
     );
   }
 
-  AppBar _appBar() {
+  AppBar _appBar(WeatherMainProvider data, BuildContext context) {
+    var size = MediaQuery.of(context).size;
     return AppBar(
-      toolbarHeight: 60,
-      title: const Padding(
-        padding: EdgeInsets.only(top: 15),
+      toolbarHeight: size.height * 0.08,
+      title: Padding(
+        padding: const EdgeInsets.only(top: 15),
         child: Column(
           children: [
-            Text(
-              //TODO: Cambiar segun la data actual
-              'currentPlace',
-              style: TextStyle(
-                  color: Colors.black,
-                  fontWeight: FontWeight.w300,
-                  fontSize: 35),
+            Container(
+              color: Colors.transparent,
+              child: (!data.isLoadingData)
+                  ? FadeInDown(
+                      child: Text(
+                        data.currentPlaceName,
+                        style: const TextStyle(
+                            color: Colors.black,
+                            fontWeight: FontWeight.w300,
+                            fontSize: 35),
+                      ),
+                    )
+                  : const SizedBox(
+                      child: CircularProgressIndicator(
+                        color: Colors.black,
+                        strokeWidth: 3,
+                      ),
+                    ),
             ),
-            SizedBox(
+            const SizedBox(
               height: 15,
             )
           ],
@@ -71,7 +101,7 @@ class WeatherScreen extends StatelessWidget {
     );
   }
 
-  Widget _drawer(BuildContext context) {
+  Widget _drawer(BuildContext context, WeatherMainProvider data) {
     final size = MediaQuery.of(context).size;
     return SafeArea(
       child: Container(
@@ -84,7 +114,7 @@ class WeatherScreen extends StatelessWidget {
               crossAxisAlignment: CrossAxisAlignment.start,
               children: [
                 //Listado
-                _listDrawer(size),
+                _listDrawer(size, data),
                 //Acciones
                 _actions(context),
               ],
@@ -95,53 +125,60 @@ class WeatherScreen extends StatelessWidget {
     );
   }
 
-  Column _actions(BuildContext context) {
-    return Column(
-      children: [
-        Container(
-          margin: const EdgeInsets.only(top: 25, left: 15),
-          child: IconButton(
-              onPressed: () {
-                Navigator.pop(context);
-              },
-              icon: const Icon(
-                Icons.close,
-                size: 30,
-              )),
-        ),
-        Padding(
-          padding: const EdgeInsets.only(top: 20, left: 18),
-          child: Container(
-            height: 50,
-            width: 50,
-            decoration: BoxDecoration(
-                color: const Color.fromARGB(255, 244, 247, 252),
-                shape: BoxShape.circle,
-                boxShadow: [
-                  BoxShadow(
-                      color: Color.fromARGB(255, 222, 236, 255),
-                      offset: Offset(2, 0),
-                      blurRadius: 5,
-                      spreadRadius: 1)
-                ]),
+  Widget _actions(BuildContext context) {
+    return FadeInRight(
+      child: Column(
+        children: [
+          //Cerrar
+          Container(
+            margin: const EdgeInsets.only(top: 25, left: 15),
             child: IconButton(
-              icon: Icon(
-                Icons.add,
-                size: 35,
+                onPressed: () {
+                  Navigator.pop(context);
+                },
+                icon: const Icon(
+                  Icons.close,
+                  size: 30,
+                )),
+          ),
+          //Agregar
+          Padding(
+            padding: const EdgeInsets.only(top: 20, left: 18),
+            child: Container(
+              height: 50,
+              width: 50,
+              decoration: const BoxDecoration(
+                  color: Color.fromARGB(255, 244, 247, 252),
+                  shape: BoxShape.circle,
+                  boxShadow: [
+                    BoxShadow(
+                        color: Color.fromARGB(255, 222, 236, 255),
+                        offset: Offset(2, 0),
+                        blurRadius: 5,
+                        spreadRadius: 1)
+                  ]),
+              child: IconButton(
+                icon: const Icon(
+                  Icons.add,
+                  size: 35,
+                ),
+                onPressed: () {
+                  Navigator.pushNamed(context, AddCountryScreen.route);
+                },
               ),
-              onPressed: () {},
             ),
           ),
-        ),
-        //Switch
-        //Switch(value: true, thumbIcon: _thumbIcon(), onChanged: (value) {})
-      ],
+          //Switch
+          //Switch(value: true, thumbIcon: _thumbIcon(), onChanged: (value) {})
+        ],
+      ),
     );
   }
 
-  Container _listDrawer(Size size) {
+  Container _listDrawer(Size size, WeatherMainProvider data) {
+    var listData = data.drawerData!;
     return Container(
-      width: 310,
+      width: size.width * 0.75,
       height: size.height * 0.91,
       margin: const EdgeInsets.only(left: 15, top: 15, bottom: 10),
       decoration: const BoxDecoration(
@@ -150,15 +187,12 @@ class WeatherScreen extends StatelessWidget {
               topLeft: Radius.circular(18), bottomLeft: Radius.circular(18))),
       child: ListView.builder(
         physics: const BouncingScrollPhysics(),
-        itemCount: 50,
+        itemCount: listData.length,
         itemBuilder: (BuildContext context, int index) {
           return MainWeatherDrawerItem(
-            customIcon: SvgPicture.asset(
-              'assets/image/svg/Icon/Icono_Nube_Sol.svg',
-              width: 50,
-            ),
-            dregress: '32',
-            place: 'TOKYO',
+            customIcon: listData[index].customIcon,
+            dregress: listData[index].degrees,
+            place: listData[index].placeName,
           );
         },
       ),

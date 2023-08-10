@@ -33,7 +33,8 @@ String formatDay(String dataString) {
   return result;
 }
 
-Widget formatCustomIconWeather(String code) {
+Widget formatCustomIconWeather(String code,
+    {double width = 200, bool isIcon = false}) {
   Widget result = aloneCloud();
 
   //Rayo
@@ -44,7 +45,7 @@ Widget formatCustomIconWeather(String code) {
       code == '231' ||
       code == '232' ||
       code == '233') {
-    result = rayCloud();
+    result = (!isIcon) ? rayCloud(width: width) : iconRayCloud(width: width);
   }
 
   //Lluvia
@@ -58,7 +59,7 @@ Widget formatCustomIconWeather(String code) {
       code == '520' ||
       code == '521' ||
       code == '522') {
-    return rainCloud();
+    return (!isIcon) ? rainCloud(width: width) : iconRainCloud(width: width);
   }
 
   //Nieve
@@ -71,7 +72,7 @@ Widget formatCustomIconWeather(String code) {
       code == '621' ||
       code == '622' ||
       code == '623') {
-    return rainCloud();
+    return (!isIcon) ? rainCloud(width: width) : iconRainCloud(width: width);
   }
 
   //Sin sol
@@ -82,12 +83,15 @@ Widget formatCustomIconWeather(String code) {
       code == '741' ||
       code == '751' ||
       code == '804') {
-    return aloneCloud();
+    return (!isIcon) ? aloneCloud(width: width) : iconAloneCloud(width: width);
   }
 
   //Sol
   if (code == '800' || code == '801' || code == '802' || code == '803') {
-    return sunCloud();
+    if (width == 200) {
+      return sunCloud(width: 141);
+    }
+    return (!isIcon) ? sunCloud(width: width) : iconSunCloud(width: width);
   }
 
   return result;

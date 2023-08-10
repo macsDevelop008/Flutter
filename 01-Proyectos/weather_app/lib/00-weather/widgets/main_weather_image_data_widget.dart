@@ -2,8 +2,8 @@ import 'package:flutter/material.dart';
 
 class MainWeatherImageDataWidget extends StatelessWidget {
   final Widget mainImageWeather;
-  final int degreesAverage; //Grados Promedio
-  final int clouds; //Nubes
+  final String degreesAverage; //Grados Promedio
+  final String clouds; //Nubes
 
   const MainWeatherImageDataWidget({
     super.key,
@@ -26,7 +26,7 @@ class MainWeatherImageDataWidget extends StatelessWidget {
               Positioned(top: 0, child: mainImageWeather),
               Positioned(
                   top: 135,
-                  right: 80,
+                  right: (degreesAverage.length < 4) ? 82 : 60,
                   child: Text(
                     '$degreesAverage°',
                     style: const TextStyle(fontSize: 40),

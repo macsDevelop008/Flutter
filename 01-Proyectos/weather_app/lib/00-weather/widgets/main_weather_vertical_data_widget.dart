@@ -20,19 +20,31 @@ class MainWeatherVerticalDataWidget extends StatelessWidget {
       margin: const EdgeInsets.symmetric(vertical: 8, horizontal: 10),
       color: Colors.transparent,
       width: double.infinity,
-      height: 50,
+      height: 48,
       child: Row(
         children: [
-          Padding(
-            padding: const EdgeInsets.only(right: 120, left: 20),
+          const SizedBox(
+            width: 10,
+          ),
+          Container(
+            alignment: Alignment.centerLeft,
+            color: Colors.transparent,
+            height: 30,
+            width: 130,
             child: Text(day),
           ),
-          Padding(
-            padding: const EdgeInsets.only(right: 35),
+          Container(
+            alignment: Alignment.centerLeft,
+            color: Colors.transparent,
+            width: 110,
+            height: 30,
             child: Text(fromTo),
           ),
-          Padding(
-            padding: const EdgeInsets.only(right: 20),
+          Container(
+            alignment: Alignment.centerLeft,
+            color: Colors.transparent,
+            width: 60,
+            height: 40,
             child: customIcon,
           ),
           Text(

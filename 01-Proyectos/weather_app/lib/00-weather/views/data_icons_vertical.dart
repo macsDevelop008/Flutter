@@ -1,6 +1,8 @@
+import 'package:animate_do/animate_do.dart';
 import 'package:flutter/material.dart';
-import 'package:flutter_svg/svg.dart';
+import 'package:provider/provider.dart';
 
+import '../services/services.dart';
 import '../widgets/widgets.dart';
 
 class DataIconsVerticalVertical extends StatelessWidget {
@@ -8,7 +10,11 @@ class DataIconsVerticalVertical extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    final data = Provider.of<WeatherMainProvider>(context)
+        .currentDataDays
+        ?.listDataHistoryDays;
     final size = MediaQuery.of(context).size;
+
     return Container(
       width: double.infinity,
       height: size.height * 0.43,
@@ -23,22 +29,32 @@ class DataIconsVerticalVertical extends StatelessWidget {
             borderRadius: const BorderRadius.only(
                 bottomRight: Radius.circular(25),
                 bottomLeft: Radius.circular(25)),
-            child: ListView.builder(
-              physics: const BouncingScrollPhysics(),
-              itemCount: 20,
-              itemBuilder: (BuildContext context, int index) {
-                return MainWeatherVerticalDataWidget(
-                  customIcon: SvgPicture.asset(
-                    'assets/image/svg/Icon/Icono_Nube_Sol.svg',
-                    width: 43,
+            child: (data != null &&
+                    !Provider.of<WeatherMainProvider>(context).isLoadingData)
+                ? ListView.builder(
+                    physics: const BouncingScrollPhysics(),
+                    itemCount: data.length,
+                    itemBuilder: (BuildContext context, int index) {
+                      return FadeInLeft(
+                        child: MainWeatherVerticalDataWidget(
+                          customIcon: data[index].customIcon,
+                          day: data[index].day,
+                          fromTo: '${data[index].from} - ${data[index].to}°C',
+                          percentage: '${data[index].clouds}%',
+                          percentageColor:
+                              (double.parse(data[index].clouds) > 50)
+                                  ? const Color.fromARGB(255, 30, 126, 204)
+                                  : const Color.fromARGB(255, 0, 0, 0),
+                        ),
+                      );
+                    },
+                  )
+                : const Center(
+                    child: CircularProgressIndicator(
+                      color: Colors.black,
+                      strokeWidth: 3,
+                    ),
                   ),
-                  day: 'LUN',
-                  fromTo: '26 - 35°C',
-                  percentage: '99%',
-                  percentageColor: Color.fromARGB(255, 30, 126, 204),
-                );
-              },
-            ),
           )),
     );
   }

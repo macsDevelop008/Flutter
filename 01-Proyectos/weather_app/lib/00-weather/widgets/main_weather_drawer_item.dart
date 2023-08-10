@@ -1,3 +1,4 @@
+import 'package:animate_do/animate_do.dart';
 import 'package:flutter/material.dart';
 
 class MainWeatherDrawerItem extends StatelessWidget {
@@ -12,26 +13,39 @@ class MainWeatherDrawerItem extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return Container(
-      margin: const EdgeInsets.symmetric(vertical: 5),
-      color: Colors.transparent,
-      width: double.infinity,
-      height: 60,
-      child: Row(
-        children: [
-          Padding(
-            padding: const EdgeInsets.only(left: 30, right: 80),
-            child: Text(
-              place,
-              style: TextStyle(fontSize: 20),
+    var size = MediaQuery.of(context).size;
+    return FadeInLeft(
+      child: Container(
+        margin: const EdgeInsets.symmetric(vertical: 5),
+        color: Colors.transparent,
+        width: double.infinity,
+        height: size.width * 0.15,
+        child: Row(
+          children: [
+            Container(
+              margin: EdgeInsets.only(left: size.width * 0.04),
+              color: Colors.transparent,
+              width: size.width * 0.3,
+              child: Text(
+                place,
+                style: TextStyle(fontSize: size.width * 0.05),
+              ),
             ),
-          ),
-          customIcon,
-          Padding(
-            padding: const EdgeInsets.only(left: 25),
-            child: Text("$dregress°", style: TextStyle(fontSize: 20)),
-          )
-        ],
+            Container(
+                color: Colors.transparent,
+                width: size.width * 0.12,
+                height: size.height * 0.06,
+                child: customIcon),
+            Container(
+                margin: EdgeInsets.only(left: size.width * 0.1),
+                alignment: Alignment.center,
+                width: size.width * 0.12,
+                height: size.height * 0.04,
+                color: Colors.transparent,
+                child: Text("$dregress°",
+                    style: TextStyle(fontSize: size.width * 0.045)))
+          ],
+        ),
       ),
     );
   }

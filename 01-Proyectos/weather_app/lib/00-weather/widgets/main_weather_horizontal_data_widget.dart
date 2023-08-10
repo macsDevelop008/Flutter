@@ -21,31 +21,28 @@ class MainWeatherHorizontalDataWidget extends StatelessWidget {
       height: double.infinity,
       child: Column(
         children: [
-          SizedBox(
+          const SizedBox(
             height: 5,
           ),
           //Title
-          Container(
-            child: Text(
-              title,
-              style: TextStyle(
-                  color: Colors.black,
-                  fontWeight: FontWeight.bold,
-                  fontSize: 15),
+          Text(
+            title,
+            style: const TextStyle(
+                color: Colors.black, fontWeight: FontWeight.bold, fontSize: 13),
+          ),
+          const SizedBox(
+            height: 2,
+          ),
+          Text(
+            percentage,
+            style: TextStyle(
+              color: colorPercentage,
+              fontWeight: FontWeight.normal,
+              fontSize: 13,
             ),
           ),
-          Container(
-            child: Text(
-              percentage,
-              style: TextStyle(
-                color: colorPercentage,
-                fontWeight: FontWeight.normal,
-                fontSize: 13,
-              ),
-            ),
-          ),
-          SizedBox(
-            height: 5,
+          const SizedBox(
+            height: 10,
           ),
           Container(
             child: customIcon,
