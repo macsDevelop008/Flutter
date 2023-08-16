@@ -1,8 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_app_food/02-recipe_result/widgets/widgets.dart';
-import 'package:flutter_app_food/helpers/succesfully_modal_helper.dart';
 
 import '../../01-search/ui/ui.dart';
+import '../../helpers/helpers.dart';
 
 class RecipeResultScreen extends StatelessWidget {
   static const route = 'recipe_result_screen';
@@ -24,29 +24,6 @@ class RecipeResultScreen extends StatelessWidget {
               _titleButton(size, color, context),
               //*Result cards
               Container(
-                alignment: Alignment.center,
-                width: size.width * 0.8,
-                height: size.height * 0.3,
-                color: Colors.transparent,
-                child: Column(
-                  children: [
-                    Container(
-                      width: double.infinity,
-                      height: size.height * 0.27,
-                      decoration: BoxDecoration(
-                          color: Colors.red,
-                          borderRadius: BorderRadius.all(
-                              Radius.circular(size.height * 0.03))),
-                    ),
-                    Container(
-                      width: size.width * 0.65,
-                      height: size.height * 0.03,
-                      color: Colors.green,
-                    ),
-                  ],
-                ),
-              )
-              /*Container(
                 color: Colors.transparent,
                 width: double.infinity,
                 height: size.height * 0.776,
@@ -92,7 +69,7 @@ class RecipeResultScreen extends StatelessWidget {
                     ),
                   ),
                 ),
-              ),*/
+              ),
             ],
           ),
           const HeaderCurveUI(scaleY: 6),
@@ -118,7 +95,7 @@ class RecipeResultScreen extends StatelessWidget {
                   fontFamily: 'Harabara', fontSize: size.width * 0.07),
             ),
             _button(size, Icons.arrow_back, color, () {
-              succesFullyModalHelper(context, size);
+              errorModalHelper(context, size);
             }),
           ],
         ),

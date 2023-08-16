@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 
-succesFullyModalHelper(BuildContext context, Size size) {
+errorModalHelper(BuildContext context, Size size) {
   return showDialog(
       context: context,
       barrierDismissible: false,
@@ -67,7 +67,7 @@ Positioned _text(Size size) {
             height: size.height * 0.015,
           ),
           Text(
-            'Carga exitosa',
+            'Error en la carga',
             style: TextStyle(
                 fontFamily: 'Harabara',
                 fontSize: size.width * 0.07,
@@ -87,12 +87,12 @@ Positioned _circleDecoration(Size size, BuildContext context) {
         _circle(size, 0.24),
         _circle(size, 0.2),
         CircleAvatar(
-          backgroundColor: Theme.of(context).primaryColor,
+          backgroundColor: Colors.redAccent,
           radius: size.width * 0.16,
           child: Icon(
-            Icons.check,
+            Icons.warning_amber_outlined,
             color: Colors.white,
-            size: size.width * 0.25,
+            size: size.width * 0.2,
           ),
         ),
       ],
@@ -120,7 +120,7 @@ Positioned _base(Size size, BuildContext context) {
             width: size.width * 0.65,
             height: size.height * 0.02,
             decoration: BoxDecoration(
-                color: Theme.of(context).primaryColor,
+                color: Colors.redAccent,
                 borderRadius: BorderRadius.only(
                     bottomLeft: Radius.circular(size.width * 0.1),
                     bottomRight: Radius.circular(size.width * 0.1))),
