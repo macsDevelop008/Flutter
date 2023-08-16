@@ -34,6 +34,8 @@ class SearchScreen extends StatelessWidget {
                     bottom: size.width * 0.07),
                 //Items de la busqueda
                 child: Column(
+                  mainAxisAlignment: MainAxisAlignment.start,
+                  //crossAxisAlignment: CrossAxisAlignment.start,
                   children: [
                     //Espacio
                     SizedBox(
@@ -54,6 +56,7 @@ class SearchScreen extends StatelessWidget {
                       height: size.height * 0.045,
                     ),
                     //*Card palabra(s) clave
+                    _requiredText(size),
                     const SpecificIngredientsView(),
                     //Espacio
                     SizedBox(
@@ -67,6 +70,27 @@ class SearchScreen extends StatelessWidget {
                     ),
                     //*Dieta
                     const DietView(),
+                    //Espacio
+                    SizedBox(
+                      height: size.height * 0.035,
+                    ),
+                    //Salud
+                    const HealthView(),
+                    //Espacio
+                    SizedBox(
+                      height: size.height * 0.035,
+                    ),
+                    //Tipo cocina
+                    const TypeCuisineView(),
+                    //Espacio
+                    SizedBox(
+                      height: size.height * 0.035,
+                    ),
+                    const TypePlateView(), //Espacio
+                    SizedBox(
+                      height: size.height * 0.035,
+                    ),
+                    const NumbewClearingsView()
                   ],
                 ),
               ),
@@ -75,7 +99,27 @@ class SearchScreen extends StatelessWidget {
         ),
         //Cabecera
         const HeaderCurveUI(scaleY: 6),
+        //Botonos flotantes
+        Positioned(
+            bottom: size.height * 0.02,
+            right: size.width * 0.03,
+            child: const ActionButtonsView()),
       ],
+    );
+  }
+
+  Widget _requiredText(Size size) {
+    return Container(
+      color: Colors.transparent,
+      width: double.infinity,
+      child: Padding(
+        padding: EdgeInsets.only(left: size.width * 0.05),
+        child: Text(
+          'Obligatorio',
+          textAlign: TextAlign.start,
+          style: TextStyle(color: Colors.redAccent),
+        ),
+      ),
     );
   }
 }

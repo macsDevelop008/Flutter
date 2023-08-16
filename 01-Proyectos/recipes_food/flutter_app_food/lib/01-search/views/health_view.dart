@@ -3,36 +3,36 @@ import 'package:multi_select_flutter/multi_select_flutter.dart';
 
 import '../helpers/helpers.dart';
 
-class DietView extends StatefulWidget {
-  const DietView({super.key});
+class HealthView extends StatefulWidget {
+  const HealthView({super.key});
 
   @override
-  State<DietView> createState() => _DietViewState();
+  State<HealthView> createState() => _HealthViewState();
 }
 
-class _DietViewState extends State<DietView> {
-  static List<Animal?> _animals = [
-    Animal(id: 1, name: "Lion"),
-    Animal(id: 2, name: "Flamingo"),
-    Animal(id: 3, name: "Hippo"),
-    Animal(id: 4, name: "Horse"),
-    Animal(id: 5, name: "Tiger"),
-    Animal(id: 6, name: "Penguin"),
-    Animal(id: 7, name: "Spider"),
-    Animal(id: 19, name: "Blue Jay"),
-    Animal(id: 20, name: "Moose"),
-    Animal(id: 21, name: "Gecko"),
-    Animal(id: 22, name: "Kangaroo"),
-    Animal(id: 23, name: "Shark"),
-    Animal(id: 24, name: "Crocodile"),
-    Animal(id: 25, name: "Owl"),
-    Animal(id: 26, name: "Dragonfly"),
-    Animal(id: 27, name: "Dolphin"),
+class _HealthViewState extends State<HealthView> {
+  static List<Animal2?> _animals = [
+    Animal2(id: 1, name: "Lion"),
+    Animal2(id: 2, name: "Flamingo"),
+    Animal2(id: 3, name: "Hippo"),
+    Animal2(id: 4, name: "Horse"),
+    Animal2(id: 5, name: "Tiger"),
+    Animal2(id: 6, name: "Penguin"),
+    Animal2(id: 7, name: "Spider"),
+    Animal2(id: 19, name: "Blue Jay"),
+    Animal2(id: 20, name: "Moose"),
+    Animal2(id: 21, name: "Gecko"),
+    Animal2(id: 22, name: "Kangaroo"),
+    Animal2(id: 23, name: "Shark"),
+    Animal2(id: 24, name: "Crocodile"),
+    Animal2(id: 25, name: "Owl"),
+    Animal2(id: 26, name: "Dragonfly"),
+    Animal2(id: 27, name: "Dolphin"),
   ];
   final _items = _animals
-      .map((animal) => MultiSelectItem<Animal>(animal!, animal.name))
+      .map((animal) => MultiSelectItem<Animal2>(animal!, animal.name))
       .toList();
-  List<Animal?> _selectedAnimals = [];
+  List<Animal2?> _selectedAnimals = [];
   final _multiSelectKey = GlobalKey<FormFieldState>();
   // ------------------------------------------------ //
 
@@ -85,6 +85,13 @@ class _DietViewState extends State<DietView> {
     );
   }
 
+  Text _title(Size size) {
+    return Text(
+      'Salud',
+      style: TextStyle(fontFamily: 'Harabara', fontSize: size.width * 0.052),
+    );
+  }
+
   SingleChildScrollView _selectItems(Color color, Size size) {
     return SingleChildScrollView(
       child: MultiSelectDialogField(
@@ -105,13 +112,6 @@ class _DietViewState extends State<DietView> {
           _selectedAnimals = values;
         },
       ),
-    );
-  }
-
-  Text _title(Size size) {
-    return Text(
-      'Dieta',
-      style: TextStyle(fontFamily: 'Harabara', fontSize: size.width * 0.052),
     );
   }
 
@@ -140,9 +140,9 @@ class _DietViewState extends State<DietView> {
   }
 }
 
-class Animal {
+class Animal2 {
   final int id;
   final String name;
 
-  Animal({required this.id, required this.name});
+  Animal2({required this.id, required this.name});
 }

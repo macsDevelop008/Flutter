@@ -2,15 +2,15 @@ import 'package:flutter/material.dart';
 
 import '../helpers/helpers.dart';
 
-class NumberIngredientsView extends StatefulWidget {
-  const NumberIngredientsView({super.key});
+class NumbewClearingsView extends StatefulWidget {
+  const NumbewClearingsView({super.key});
 
   @override
-  State<NumberIngredientsView> createState() => _NumberIngredientsViewState();
+  State<NumbewClearingsView> createState() => _NumbewClearingsViewState();
 }
 
-class _NumberIngredientsViewState extends State<NumberIngredientsView> {
-  final TextEditingController _textNumIngredientsController =
+class _NumbewClearingsViewState extends State<NumbewClearingsView> {
+  final TextEditingController _textNumClearingsController =
       TextEditingController();
   @override
   Widget build(BuildContext context) {
@@ -44,17 +44,17 @@ class _NumberIngredientsViewState extends State<NumberIngredientsView> {
 
   Text _title(Size size) {
     return Text(
-      'Número de ingredientes',
+      'Número de calorias',
       style: TextStyle(fontFamily: 'Harabara', fontSize: size.width * 0.052),
     );
   }
 
   TextField _textField(Color color) {
     return TextField(
-      controller: _textNumIngredientsController,
+      controller: _textNumClearingsController,
       keyboardType: TextInputType.number,
       decoration: InputDecoration(
-          labelText: 'Ejemplo: 1-3  (Min-Max)',
+          labelText: 'Ejemplo: 100-300  (Min-Max)',
           labelStyle:
               const TextStyle(color: Colors.black, fontFamily: 'Roboto'),
           enabledBorder: const OutlineInputBorder(

@@ -5,7 +5,7 @@ import '01-search/screens/screens.dart';
 import '02-recipe_result/screens/screens.dart';
 
 class AppRoutes {
-  static const initialRoute = InitialScreen.route;
+  static const initialRoute = RecipeResultScreen.route;
 
   static Map<String, Widget Function(BuildContext)> routes = {
     InitialScreen.route: (BuildContext context) => const InitialScreen(),

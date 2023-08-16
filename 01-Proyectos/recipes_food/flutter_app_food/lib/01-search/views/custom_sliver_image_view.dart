@@ -17,7 +17,7 @@ class CustomSliverImageView extends StatelessWidget {
         width: double.infinity,
         height: size.height * 0.4,
         child: ClipRRect(
-          borderRadius: BorderRadius.circular(size.width * 0.15),
+          borderRadius: BorderRadius.circular(size.width * 0),
           child: const FadeInImage(
               fit: BoxFit.cover,
               placeholderFit: BoxFit.none,
