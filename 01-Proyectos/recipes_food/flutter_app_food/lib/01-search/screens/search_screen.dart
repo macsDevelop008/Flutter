@@ -90,7 +90,7 @@ class SearchScreen extends StatelessWidget {
                     SizedBox(
                       height: size.height * 0.035,
                     ),
-                    const NumbewClearingsView()
+                    const NumberClearingsView()
                   ],
                 ),
               ),

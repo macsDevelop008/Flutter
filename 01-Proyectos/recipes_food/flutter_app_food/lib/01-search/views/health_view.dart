@@ -1,7 +1,10 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_app_food/01-search/models/models.dart';
 import 'package:multi_select_flutter/multi_select_flutter.dart';
+import 'package:provider/provider.dart';
 
 import '../helpers/helpers.dart';
+import '../services/search_service.dart';
 
 class HealthView extends StatefulWidget {
   const HealthView({super.key});
@@ -11,33 +14,24 @@ class HealthView extends StatefulWidget {
 }
 
 class _HealthViewState extends State<HealthView> {
-  static List<Animal2?> _animals = [
-    Animal2(id: 1, name: "Lion"),
-    Animal2(id: 2, name: "Flamingo"),
-    Animal2(id: 3, name: "Hippo"),
-    Animal2(id: 4, name: "Horse"),
-    Animal2(id: 5, name: "Tiger"),
-    Animal2(id: 6, name: "Penguin"),
-    Animal2(id: 7, name: "Spider"),
-    Animal2(id: 19, name: "Blue Jay"),
-    Animal2(id: 20, name: "Moose"),
-    Animal2(id: 21, name: "Gecko"),
-    Animal2(id: 22, name: "Kangaroo"),
-    Animal2(id: 23, name: "Shark"),
-    Animal2(id: 24, name: "Crocodile"),
-    Animal2(id: 25, name: "Owl"),
-    Animal2(id: 26, name: "Dragonfly"),
-    Animal2(id: 27, name: "Dolphin"),
-  ];
-  final _items = _animals
-      .map((animal) => MultiSelectItem<Animal2>(animal!, animal.name))
-      .toList();
-  List<Animal2?> _selectedAnimals = [];
-  final _multiSelectKey = GlobalKey<FormFieldState>();
-  // ------------------------------------------------ //
+  late List<HealthModel> _health;
+  late List<MultiSelectItem<HealthModel>> _items;
+  late List<HealthModel> _selectedHealts;
+  late SearchService _serviceProvider;
+// ------------------------------------------------ //
 
   @override
   Widget build(BuildContext context) {
+    //Provider
+    _serviceProvider = Provider.of<SearchService>(context, listen: true);
+    //Listadod e items
+    _health = _serviceProvider.listHealth;
+    _items = _health
+        .map((health) => MultiSelectItem<HealthModel>(health, health.valueEs))
+        .toList();
+    //Items ya seleccionados
+    _selectedHealts = _serviceProvider.selectedHealth;
+
     var size = MediaQuery.of(context).size;
     Color color = Theme.of(context).primaryColor;
     return CardBasicHelper(
@@ -53,7 +47,6 @@ class _HealthViewState extends State<HealthView> {
               height: size.height * 0.018,
             ),
             //*Titulo
-            //TODO: Implementar traductor
             Container(
                 alignment: Alignment.center,
                 height: size.height * 0.05,
@@ -62,7 +55,10 @@ class _HealthViewState extends State<HealthView> {
                 child: Row(
                   mainAxisAlignment: MainAxisAlignment.start,
                   children: [
-                    _button(size, Icons.delete, Colors.redAccent, () {}),
+                    _button(size, Icons.delete, Colors.redAccent, () {
+                      _serviceProvider.selectedHealth = [];
+                      print(_serviceProvider.selectedDiets.isEmpty);
+                    }),
                     SizedBox(
                       width: size.width * 0.185,
                     ),
@@ -96,20 +92,21 @@ class _HealthViewState extends State<HealthView> {
     return SingleChildScrollView(
       child: MultiSelectDialogField(
         items: _items,
+        initialValue: _selectedHealts,
         searchable: true,
         barrierColor: Colors.black.withOpacity(0.3),
         decoration: BoxDecoration(
             border: Border.all(color: color, width: 1.8),
             borderRadius: BorderRadius.circular(size.width * 0.2)),
-        //TODO: traduccion
-        title: Text(
+        title: const Text(
           'Buscar',
           style: TextStyle(fontFamily: 'Roboto'),
         ),
-        buttonText: Text('Seleccione las deseadas',
+        buttonText: const Text('Seleccione las deseadas',
             style: TextStyle(fontFamily: 'Roboto')),
         onConfirm: (values) {
-          _selectedAnimals = values;
+          //_selectedAnimals = values;
+          _serviceProvider.selectedHealth = _selectedHealts;
         },
       ),
     );
@@ -138,11 +135,4 @@ class _HealthViewState extends State<HealthView> {
       ),
     );
   }
-}
-
-class Animal2 {
-  final int id;
-  final String name;
-
-  Animal2({required this.id, required this.name});
 }

@@ -1,24 +1,35 @@
 import 'package:flutter/material.dart';
 import 'package:carousel_slider/carousel_slider.dart';
+import 'package:provider/provider.dart';
+
+import '../services/initial_service.dart';
 
 class CarouselDataWidget extends StatelessWidget {
   const CarouselDataWidget({super.key});
 
   @override
   Widget build(BuildContext context) {
+    CarouselController carouselController = CarouselController();
+    var service = Provider.of<InitialService>(context, listen: false);
+    service.carouselController = carouselController;
     var size = MediaQuery.of(context).size;
-    Color onColor = Theme.of(context).primaryColor;
+    //Color onColor = Theme.of(context).primaryColor;
 
     return CarouselSlider(
+      carouselController: service.carouselController,
       items: [
-        _part(_changeLanguage(size, onColor), size),
+        //_part(_changeLanguage(size, onColor), size),
         _part(_welcome(size), size),
         _part(_myText(size), size),
       ],
       options: CarouselOptions(
-          enableInfiniteScroll: false,
-          enlargeCenterPage: true,
-          viewportFraction: 1),
+        enableInfiniteScroll: false,
+        enlargeCenterPage: true,
+        viewportFraction: 1,
+        onPageChanged: (index, reason) {
+          service.currentIndexCarousel = index;
+        },
+      ),
     );
   }
 
@@ -38,7 +49,6 @@ class CarouselDataWidget extends StatelessWidget {
     return Column(
       mainAxisAlignment: MainAxisAlignment.center,
       children: [
-        //TODO: cambiar titulo segun el idioma actual
         Text(
           'Change Language',
           style: TextStyle(fontFamily: 'Harabara', fontSize: size.width * 0.05),
@@ -49,7 +59,6 @@ class CarouselDataWidget extends StatelessWidget {
         Row(
           mainAxisAlignment: MainAxisAlignment.spaceEvenly,
           children: [
-            //TODO: calular evento segun idioma actual, evento cambio de idioma
             _buttonLanguage(onColor, size, 'Español', () {}),
             _buttonLanguage(onColor, size, 'English', null),
           ],

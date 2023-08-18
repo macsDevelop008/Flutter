@@ -9,18 +9,19 @@ class ActionButtonsView extends StatelessWidget {
     var colors = Theme.of(context);
     return Column(
       children: [
-        _button(colors.primaryColor, size, () {}, Icons.search_sharp),
+        _button(colors.primaryColor, size, () {}, Icons.search_sharp, 'btn1'),
         SizedBox(
           height: size.height * 0.02,
         ),
-        _button(Colors.redAccent, size, () {}, Icons.delete),
+        _button(Colors.redAccent, size, () {}, Icons.delete, 'btn2'),
       ],
     );
   }
 
-  FloatingActionButton _button(
-      Color color, Size size, Function()? function, IconData icon) {
+  FloatingActionButton _button(Color color, Size size, Function()? function,
+      IconData icon, String heroTag) {
     return FloatingActionButton(
+      heroTag: heroTag,
       onPressed: function,
       backgroundColor: color,
       child: Icon(

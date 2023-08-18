@@ -15,7 +15,7 @@ class CarouselDataView extends StatelessWidget {
       child: Column(
         mainAxisAlignment: MainAxisAlignment.spaceAround,
         children: [
-          //*Ciruclos carrusel
+          //*Circulos carrusel
           Container(
             color: Colors.transparent,
             width: size.width,

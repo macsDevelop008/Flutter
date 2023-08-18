@@ -1,4 +1,6 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_app_food/00-initial/services/initial_service.dart';
+import 'package:provider/provider.dart';
 
 class PointsCarouselWidget extends StatelessWidget {
   const PointsCarouselWidget({super.key});
@@ -12,17 +14,10 @@ class PointsCarouselWidget extends StatelessWidget {
     return Container(
       alignment: Alignment.center,
       child: Row(mainAxisAlignment: MainAxisAlignment.center, children: [
-        //TODO: implementar segun el numero de datos en el carrusel así mismo crear numero de botones en un recorriendo y el index sería el numero
         _Point(
           size: size,
           offColor: offColor,
-          myNumOfCarousel: 1,
-          onColor: onColor,
-        ),
-        _Point(
-          size: size,
-          offColor: offColor,
-          myNumOfCarousel: 1,
+          myNumOfCarousel: 0,
           onColor: onColor,
         ),
         _Point(
@@ -52,13 +47,16 @@ class _Point extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    var service = Provider.of<InitialService>(context);
     var size = MediaQuery.of(context).size;
     return Container(
       margin:
           EdgeInsets.only(right: size.width * 0.02, left: size.width * 0.02),
       width: size.width * 0.025,
       decoration: BoxDecoration(
-        color: onColor,
+        color: (service.currentIndexCarousel == myNumOfCarousel)
+            ? onColor
+            : offColor,
         shape: BoxShape.circle,
       ),
     );

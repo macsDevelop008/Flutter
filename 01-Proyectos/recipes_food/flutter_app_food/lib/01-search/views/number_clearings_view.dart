@@ -2,14 +2,14 @@ import 'package:flutter/material.dart';
 
 import '../helpers/helpers.dart';
 
-class NumbewClearingsView extends StatefulWidget {
-  const NumbewClearingsView({super.key});
+class NumberClearingsView extends StatefulWidget {
+  const NumberClearingsView({super.key});
 
   @override
-  State<NumbewClearingsView> createState() => _NumbewClearingsViewState();
+  State<NumberClearingsView> createState() => _NumberClearingsViewState();
 }
 
-class _NumbewClearingsViewState extends State<NumbewClearingsView> {
+class _NumberClearingsViewState extends State<NumberClearingsView> {
   final TextEditingController _textNumClearingsController =
       TextEditingController();
   @override

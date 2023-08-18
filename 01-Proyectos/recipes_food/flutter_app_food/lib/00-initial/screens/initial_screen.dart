@@ -14,7 +14,8 @@ class InitialScreen extends StatelessWidget {
         alignment: Alignment.center,
         children: [
           const BackgroundView(),
-          Positioned(bottom: size.height * 0.01, child: CarouselDataView())
+          Positioned(
+              bottom: size.height * 0.01, child: const CarouselDataView())
         ],
       ),
     );
