@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 
-succesFullyModalHelper(BuildContext context, Size size) {
+succesFullyModalHelper(
+    BuildContext context, Size size, String text, Function() function) {
   return showDialog(
       context: context,
       barrierDismissible: false,
@@ -24,18 +25,43 @@ succesFullyModalHelper(BuildContext context, Size size) {
                     //*Circulo decoración
                     _circleDecoration(size, context),
                     //*Texto
-                    _text(size)
+                    _text(size, text)
                   ],
                 ),
               ),
               SizedBox(
                 height: size.height * 0.1,
               ),
-              _buttonClose(size, context)
+              //*Botones - Acciones
+              Row(
+                mainAxisAlignment: MainAxisAlignment.center,
+                children: [
+                  _buttonClose(size, context),
+                  SizedBox(
+                    height: size.width * 0.1,
+                  ),
+                  _buttonConfirm(size, context, function)
+                ],
+              )
             ],
           ),
         );
       });
+}
+
+IconButton _buttonConfirm(
+    Size size, BuildContext context, Function() function) {
+  return IconButton(
+      iconSize: size.width * 0.12,
+      onPressed: () {
+        Navigator.pop(context);
+        function();
+      },
+      icon: Icon(
+        Icons.check,
+        size: size.width * 0.12,
+        color: Colors.white,
+      ));
 }
 
 IconButton _buttonClose(Size size, BuildContext context) {
@@ -51,13 +77,13 @@ IconButton _buttonClose(Size size, BuildContext context) {
       ));
 }
 
-Positioned _text(Size size) {
+Positioned _text(Size size, String text) {
   return Positioned(
       bottom: size.height * 0.06,
       child: Column(
         children: [
           Text(
-            'Proceso finalizado',
+            'Cuidado',
             style: TextStyle(
                 fontFamily: 'Roboto',
                 fontSize: size.width * 0.045,
@@ -67,10 +93,10 @@ Positioned _text(Size size) {
             height: size.height * 0.015,
           ),
           Text(
-            'Carga exitosa',
+            text, //'Desea eliminar todos los valores?',
             style: TextStyle(
                 fontFamily: 'Harabara',
-                fontSize: size.width * 0.07,
+                fontSize: size.width * 0.05,
                 color: Colors.black.withOpacity(1)),
           ),
         ],

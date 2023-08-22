@@ -41,7 +41,6 @@ class SearchScreen extends StatelessWidget {
                     SizedBox(
                       height: size.height * 0.025,
                     ),
-                    //TODO: Implementar traduccion
                     //* Titulo
                     const TitleView(),
                     //_title(size),

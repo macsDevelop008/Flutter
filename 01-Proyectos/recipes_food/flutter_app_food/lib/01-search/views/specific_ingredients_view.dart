@@ -1,4 +1,6 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_app_food/01-search/services/search_service.dart';
+import 'package:provider/provider.dart';
 
 import '../helpers/helpers.dart';
 
@@ -11,11 +13,16 @@ class SpecificIngredientsView extends StatefulWidget {
 }
 
 class _SpecificIngredientsViewState extends State<SpecificIngredientsView> {
-  final TextEditingController _textKeyWordController = TextEditingController();
+  late TextEditingController _textKeyWordController;
+  late SearchService _provider;
+
   @override
   Widget build(BuildContext context) {
     var size = MediaQuery.of(context).size;
     Color color = Theme.of(context).primaryColor;
+    _provider = Provider.of<SearchService>(context);
+    _textKeyWordController = _provider.keyWordController;
+
     return CardBasicHelper(
       height: size.height * 0.3,
       width: size.width,
@@ -25,7 +32,6 @@ class _SpecificIngredientsViewState extends State<SpecificIngredientsView> {
           mainAxisAlignment: MainAxisAlignment.spaceAround,
           children: [
             //*Titulo
-            //TODO: Implementar traductor
             _title(size),
             //*TextField
             _textField(color),
@@ -33,11 +39,15 @@ class _SpecificIngredientsViewState extends State<SpecificIngredientsView> {
             Row(
               mainAxisAlignment: MainAxisAlignment.start,
               children: [
-                _button(size, Icons.check, color, () {}),
+                _button(size, Icons.check, color, () {
+                  _provider.hideKeyboard(context);
+                }),
                 SizedBox(
                   width: size.width * 0.055,
                 ),
-                _button(size, Icons.delete, Colors.red, () {}),
+                _button(size, Icons.delete, Colors.red, () {
+                  _provider.clearKeyWord();
+                }),
               ],
             )
           ],
@@ -72,6 +82,9 @@ class _SpecificIngredientsViewState extends State<SpecificIngredientsView> {
 
   TextField _textField(Color color) {
     return TextField(
+      onChanged: (value) {
+        _provider.keyword = value;
+      },
       controller: _textKeyWordController,
       decoration: InputDecoration(
           labelText: 'Ejemplo: pollo, res',

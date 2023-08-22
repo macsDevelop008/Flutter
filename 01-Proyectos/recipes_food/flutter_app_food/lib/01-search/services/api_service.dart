@@ -1,5 +1,4 @@
 import 'dart:convert';
-import 'dart:ffi';
 
 import 'package:flutter_app_food/01-search/models/recipe_model.dart';
 import 'package:dio/dio.dart';
@@ -8,8 +7,8 @@ class Api {
   static Api? instantiate;
   final Dio _dio = Dio();
   final String _url = 'https://api.edamam.com';
-  final String _appId = 'ae60db49';
-  final String _appKey = '87c32696c65146d0f6dc2ae40640b031';
+  final String _appId = '966d6c48';
+  final String _appKey = 'c640d9830e9200c7c23c7d7d96811cf7';
   final String _route = '/api/recipes/v2';
 
   static Future<Api> getInstance() async {
@@ -39,12 +38,8 @@ class Api {
       queryParam['type'] = 'public';
       queryParam['app_id'] = _appId;
       queryParam['app_key'] = _appKey;
-      // ignore: avoid_print
-      print(queryParam);
       final response =
           await _dio.get('$_url$_route', queryParameters: queryParam);
-      // ignore: avoid_print
-      print(response.statusCode);
       if (response.statusCode == 200 && response.data.isNotEmpty) {
         //print(response.data['hits'][0]['recipe']['label']);
         //print(response.data['hits'][0]['recipe']);
@@ -63,6 +58,7 @@ class Api {
         return null;
       }
     } catch (e) {
+      // ignore: avoid_print
       print(e);
       return null;
     }

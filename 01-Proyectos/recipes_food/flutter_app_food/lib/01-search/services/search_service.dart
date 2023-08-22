@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_app_food/01-search/models/models.dart';
 import 'package:flutter_app_food/01-search/services/api_service.dart';
+import 'package:flutter_app_food/02-recipe_result/screens/recipe_result_screen.dart';
 
 class SearchService extends ChangeNotifier {
   //! ATRIBUTOS --------------------
@@ -42,6 +43,13 @@ class SearchService extends ChangeNotifier {
 
   //Opciones listado tipo cocina
   final List<DropdownMenuItem<Object>> _listTypeCuisine = [
+    DropdownMenuItem(
+      value: 0,
+      child: Text(
+        "Seleccione una opcion",
+        style: TextStyle(color: Colors.black.withOpacity(0.3)),
+      ),
+    ),
     const DropdownMenuItem(
       value: "amaerican",
       child: Text("americano"),
@@ -114,6 +122,13 @@ class SearchService extends ChangeNotifier {
 
   //Opciones listado tipo cocina
   final List<DropdownMenuItem<Object>> _listTypeFood = [
+    DropdownMenuItem(
+      value: 0,
+      child: Text(
+        "Seleccione una opcion",
+        style: TextStyle(color: Colors.black.withOpacity(0.3)),
+      ),
+    ),
     const DropdownMenuItem(
       value: "breakfast",
       child: Text("desayuno"),
@@ -138,6 +153,13 @@ class SearchService extends ChangeNotifier {
 
   //Opciones listado tipo de plato
   final List<DropdownMenuItem<Object>> _listTypePlate = [
+    DropdownMenuItem(
+      value: 0,
+      child: Text(
+        "Seleccione una opcion",
+        style: TextStyle(color: Colors.black.withOpacity(0.3)),
+      ),
+    ),
     const DropdownMenuItem(
       value: "bread",
       child: Text("pan"),
@@ -198,13 +220,20 @@ class SearchService extends ChangeNotifier {
 
   //*DATOS PARA CALCULOS
   List<RecipeModel>? _dataResult;
+  final TextEditingController _keyWordController = TextEditingController();
   late String _keyword = '';
+
+  final TextEditingController _numIngredientsController =
+      TextEditingController();
   late String _numIngredients = '';
+
   late List<DietModel> _selectedDiets = [];
   late List<HealthModel> _selectedHealth = [];
-  late List<DropdownMenuItem<Object>> _selectedTypeCuisine = [];
-  late List<DropdownMenuItem<Object>> _selectedTypeFood = [];
-  late List<DropdownMenuItem<Object>> _selectedTypePlate = [];
+  late Object? _selectedTypeCuisine = 0;
+  late Object? _selectedTypePlate = 0;
+
+  final TextEditingController _numCaloriesController = TextEditingController();
+  late String _numCalories = '';
 
   //! METODOS ------------------------
 
@@ -214,6 +243,12 @@ class SearchService extends ChangeNotifier {
   List<DropdownMenuItem<Object>> get listTypeFood => _listTypeFood;
   List<DropdownMenuItem<Object>> get listTypePlate => _listTypePlate;
   List<RecipeModel>? get dataResult => _dataResult;
+
+  // ignore: unnecessary_getters_setters
+  TextEditingController get keyWordController => _keyWordController;
+  TextEditingController get numIngredientsController =>
+      _numIngredientsController;
+  TextEditingController get numCaloriesController => _numCaloriesController;
 
   // ignore: unnecessary_getters_setters
   String get keyword => _keyword;
@@ -244,37 +279,97 @@ class SearchService extends ChangeNotifier {
   }
 
   // ignore: unnecessary_getters_setters
-  List<DropdownMenuItem<Object>> get selectedTypeCuisine =>
-      _selectedTypeCuisine;
-  set selectedTypeCuisine(List<DropdownMenuItem<Object>> value) {
+  Object? get selectedTypeCuisine => _selectedTypeCuisine;
+  set selectedTypeCuisine(Object? value) {
     _selectedTypeCuisine = value;
     notifyListeners();
   }
 
   // ignore: unnecessary_getters_setters
-  List<DropdownMenuItem<Object>> get selectedTypeFood => _selectedTypeFood;
+  /*List<DropdownMenuItem<Object>> get selectedTypeFood => _selectedTypeFood;
   set selectedTypeFood(List<DropdownMenuItem<Object>> value) {
     _selectedTypeFood = value;
     notifyListeners();
-  }
+  }*/
 
   // ignore: unnecessary_getters_setters
-  List<DropdownMenuItem<Object>> get selectedTypePlate => _selectedTypePlate;
-  set selectedTypePlate(List<DropdownMenuItem<Object>> value) {
+  Object? get selectedTypePlate => _selectedTypePlate;
+  set selectedTypePlate(Object? value) {
     _selectedTypePlate = value;
     notifyListeners();
   }
 
+  // ignore: unnecessary_getters_setters
+  String get numCalories => _numCalories;
+  set numCalories(String value) {
+    _numCalories = value;
+    notifyListeners();
+  }
+
   //Ejecuta el calculo resultante de la consulta
-  Future<void> caculateData(QueryModel queryModel) async {
+  Future<List<RecipeModel>?> caculateData(QueryModel queryModel) async {
     var api = await Api.getInstance();
     _dataResult = await api.recipeResult(queryModel.toMap());
-    notifyListeners();
+    //notifyListeners();
+    return _dataResult;
     /*
     QueryModel(
                     keyWord: 'pollo',
                     calories: '100-500',
                     health: ['alcohol-free', 'celery-free'])
      */
+  }
+
+  void removeAllValues(BuildContext context) {
+    hideKeyboard(context);
+    _keyWordController.clear();
+    _keyword = '';
+    _numIngredientsController.clear();
+    _numIngredients = '';
+    _selectedDiets = [];
+    _selectedHealth = [];
+    _selectedTypeCuisine = 0;
+    _selectedTypePlate = 0;
+    _numCaloriesController.clear();
+    _numCalories = '';
+    notifyListeners();
+  }
+
+  void clearKeyWord() {
+    _keyword = '';
+    _keyWordController.clear();
+    notifyListeners();
+  }
+
+  void clearNumIngredients() {
+    _numIngredients = '';
+    _numIngredientsController.clear();
+    notifyListeners();
+  }
+
+  void clearDiet() {
+    _selectedDiets = [];
+    notifyListeners();
+  }
+
+  void clearHealt() {
+    _selectedHealth = [];
+
+    notifyListeners();
+  }
+
+  void clearNumCalories() {
+    _numCalories = '';
+    _numCaloriesController.clear();
+    notifyListeners();
+  }
+
+  void hideKeyboard(BuildContext context) {
+    FocusScope.of(context).unfocus();
+  }
+
+  void changePageToResults(BuildContext context) {
+    hideKeyboard(context);
+    Navigator.pushNamed(context, RecipeResultScreen.route);
   }
 }

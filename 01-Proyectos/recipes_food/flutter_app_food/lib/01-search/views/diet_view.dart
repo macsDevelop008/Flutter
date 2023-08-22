@@ -56,7 +56,7 @@ class _DietViewState extends State<DietView> {
                   mainAxisAlignment: MainAxisAlignment.start,
                   children: [
                     _button(size, Icons.delete, Colors.redAccent, () {
-                      _serviceProvider.selectedDiets = [];
+                      _serviceProvider.clearDiet();
                     }),
                     SizedBox(
                       width: size.width * 0.185,

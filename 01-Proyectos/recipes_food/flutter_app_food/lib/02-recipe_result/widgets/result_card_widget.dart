@@ -143,6 +143,7 @@ class ResultCardWidget extends StatelessWidget {
           'Fuente:',
           style: TextStyle(
               fontFamily: 'Roboto',
+              //overflow: TextOverflow.ellipsis,
               fontStyle: FontStyle.normal,
               fontSize: size.width * 0.05),
         ),
@@ -150,8 +151,8 @@ class ResultCardWidget extends StatelessWidget {
           width: size.width * 0.03,
         ),
         Text(
-          fuente,
-          overflow: TextOverflow.ellipsis,
+          (fuente.length > 15) ? '${fuente.substring(0, 12)}...' : fuente,
+          //overflow: TextOverflow.ellipsis,
           style: TextStyle(
               fontFamily: 'Roboto',
               fontStyle: FontStyle.normal,

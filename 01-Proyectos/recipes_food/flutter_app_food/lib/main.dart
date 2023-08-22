@@ -5,6 +5,7 @@ import 'package:flutter_app_food/themes/general_theme.dart';
 import 'package:provider/provider.dart';
 
 import '01-search/services/search_service.dart';
+import '02-recipe_result/services/recipe_result_service.dart';
 
 void main() => runApp(const MyApp());
 
@@ -20,6 +21,9 @@ class MyApp extends StatelessWidget {
         ),
         ChangeNotifierProvider(
           create: (BuildContext context) => SearchService(),
+        ),
+        ChangeNotifierProvider(
+          create: (BuildContext context) => RecipeResultService(),
         ),
       ],
       child: MaterialApp(

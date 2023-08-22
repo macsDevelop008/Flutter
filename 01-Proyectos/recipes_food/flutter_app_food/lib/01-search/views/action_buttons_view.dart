@@ -1,4 +1,7 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_app_food/01-search/services/search_service.dart';
+import 'package:flutter_app_food/helpers/helpers.dart';
+import 'package:provider/provider.dart';
 
 class ActionButtonsView extends StatelessWidget {
   const ActionButtonsView({super.key});
@@ -7,13 +10,35 @@ class ActionButtonsView extends StatelessWidget {
   Widget build(BuildContext context) {
     var size = MediaQuery.of(context).size;
     var colors = Theme.of(context);
+    var provider = Provider.of<SearchService>(context);
+
     return Column(
       children: [
-        _button(colors.primaryColor, size, () {}, Icons.search_sharp, 'btn1'),
+        _button(colors.primaryColor, size, () {
+          //Verificar si ya escricio algo en la palabra clave
+          if (provider.keyword != '') {
+            //Ventana confirmar cambio de ventana
+            //provider.changePageToResults(context);
+            succesFullyModalHelper(context, size, 'Desea ver los resultados?',
+                () {
+              provider.changePageToResults(context);
+            });
+          } else {
+            //No ha escrito nada en la palabra clave
+            //Ventana error
+            errorModalHelper(context, size, 'Llene el campo obligatorio');
+          }
+        }, Icons.search_sharp, 'btn1'),
         SizedBox(
           height: size.height * 0.02,
         ),
-        _button(Colors.redAccent, size, () {}, Icons.delete, 'btn2'),
+        _button(Colors.redAccent, size, () {
+          //Ventana para confirmar - eliminar todos los valores
+          succesFullyModalHelper(
+              context, size, 'Desea eliminar todos los valores?', () {
+            provider.removeAllValues(context);
+          });
+        }, Icons.delete, 'btn2'),
       ],
     );
   }

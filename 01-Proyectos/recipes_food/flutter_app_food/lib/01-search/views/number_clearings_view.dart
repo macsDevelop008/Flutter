@@ -1,4 +1,6 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_app_food/01-search/services/search_service.dart';
+import 'package:provider/provider.dart';
 
 import '../helpers/helpers.dart';
 
@@ -10,12 +12,16 @@ class NumberClearingsView extends StatefulWidget {
 }
 
 class _NumberClearingsViewState extends State<NumberClearingsView> {
-  final TextEditingController _textNumClearingsController =
-      TextEditingController();
+  late TextEditingController _textNumClearingsController;
+  late SearchService _provider;
+
   @override
   Widget build(BuildContext context) {
     var size = MediaQuery.of(context).size;
     Color color = Theme.of(context).primaryColor;
+    _provider = Provider.of<SearchService>(context);
+    _textNumClearingsController = _provider.numCaloriesController;
+
     return CardBasicHelper(
         height: size.height * 0.27,
         width: size.width,
@@ -24,17 +30,20 @@ class _NumberClearingsViewState extends State<NumberClearingsView> {
           child: Column(
             mainAxisAlignment: MainAxisAlignment.spaceAround,
             children: [
-              //TODO: traducir
               _title(size),
               _textField(color),
               Row(
                 mainAxisAlignment: MainAxisAlignment.start,
                 children: [
-                  _button(size, Icons.check, color, () {}),
+                  _button(size, Icons.check, color, () {
+                    _provider.hideKeyboard(context);
+                  }),
                   SizedBox(
                     width: size.width * 0.055,
                   ),
-                  _button(size, Icons.delete, Colors.red, () {}),
+                  _button(size, Icons.delete, Colors.red, () {
+                    _provider.clearNumCalories();
+                  }),
                 ],
               )
             ],

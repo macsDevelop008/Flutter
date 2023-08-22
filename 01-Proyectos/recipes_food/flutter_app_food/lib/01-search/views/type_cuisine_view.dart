@@ -1,6 +1,8 @@
 import 'package:flutter/material.dart';
+import 'package:provider/provider.dart';
 
 import '../helpers/helpers.dart';
+import '../services/search_service.dart';
 
 class TypeCuisineView extends StatefulWidget {
   const TypeCuisineView({super.key});
@@ -10,33 +12,18 @@ class TypeCuisineView extends StatefulWidget {
 }
 
 class _TypeCuisineViewState extends State<TypeCuisineView> {
-  final _items = [
-    DropdownMenuItem(
-      value: 0,
-      child: Text(
-        "Seleccione una opcion",
-        style: TextStyle(color: Colors.black.withOpacity(0.3)),
-      ),
-    ),
-    DropdownMenuItem(
-      value: "hola",
-      child: Text("hola"),
-    ),
-    DropdownMenuItem(
-      value: "hola2",
-      child: Text("hola2"),
-    ),
-    DropdownMenuItem(
-      value: "hola3",
-      child: Text("hola3"),
-    ),
-  ];
-  Object? _value = 0;
+  late List<DropdownMenuItem<Object>>? _items;
+  late SearchService _searchService;
+  late Object? _value;
 
   @override
   Widget build(BuildContext context) {
     var size = MediaQuery.of(context).size;
     Color color = Theme.of(context).primaryColor;
+    _searchService = Provider.of<SearchService>(context);
+    _items = _searchService.listTypeCuisine;
+    _value = _searchService.selectedTypeCuisine;
+
     return CardBasicHelper(
         height: size.height * 0.2,
         width: size.width,
@@ -50,7 +37,6 @@ class _TypeCuisineViewState extends State<TypeCuisineView> {
                 height: size.height * 0.018,
               ),
               //*Titulo
-              //TODO: Implementar traductor
               Container(
                   alignment: Alignment.center,
                   height: size.height * 0.05,
@@ -84,9 +70,11 @@ class _TypeCuisineViewState extends State<TypeCuisineView> {
           value: _value,
           items: _items,
           onChanged: (value) {
-            setState(() {
+            _searchService.selectedTypeCuisine = value;
+            print(value);
+            /*setState(() {
               _value = value;
-            });
+            });*/
           },
           icon: const Icon(Icons.arrow_downward),
           isExpanded: true,

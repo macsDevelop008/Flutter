@@ -56,8 +56,7 @@ class _HealthViewState extends State<HealthView> {
                   mainAxisAlignment: MainAxisAlignment.start,
                   children: [
                     _button(size, Icons.delete, Colors.redAccent, () {
-                      _serviceProvider.selectedHealth = [];
-                      print(_serviceProvider.selectedDiets.isEmpty);
+                      _serviceProvider.clearHealt();
                     }),
                     SizedBox(
                       width: size.width * 0.185,

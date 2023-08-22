@@ -1,13 +1,11 @@
-import 'dart:convert';
-
 class RecipeModel {
-  final String image;
-  final String name;
-  final String source; //Fuente
-  final String url; //Receta
-  final String calories;
+  final String _image;
+  final String _name;
+  final String _source; //Fuente
+  final String _url; //Receta
+  final String _calories;
 
-  RecipeModel(this.image, this.name, this.source, this.url, this.calories);
+  RecipeModel(this._image, this._name, this._source, this._url, this._calories);
 
   factory RecipeModel.fromJson(Map<String, dynamic> json) {
     var image = json['image'];
@@ -18,4 +16,10 @@ class RecipeModel {
     var caloriesFormat = calories.split('.');
     return RecipeModel(image, name, source, url, caloriesFormat[0]);
   }
+
+  String get image => _image;
+  String get name => _name;
+  String get source => _source; //Fuente
+  String get url => _url; //Receta
+  String get calories => _calories;
 }

@@ -1,4 +1,6 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_app_food/01-search/services/search_service.dart';
+import 'package:provider/provider.dart';
 
 import '../helpers/helpers.dart';
 
@@ -10,12 +12,16 @@ class NumberIngredientsView extends StatefulWidget {
 }
 
 class _NumberIngredientsViewState extends State<NumberIngredientsView> {
-  final TextEditingController _textNumIngredientsController =
-      TextEditingController();
+  late TextEditingController _textNumIngredientsController;
+  late SearchService _provider;
+
   @override
   Widget build(BuildContext context) {
     var size = MediaQuery.of(context).size;
     Color color = Theme.of(context).primaryColor;
+    _provider = Provider.of<SearchService>(context);
+    _textNumIngredientsController = _provider.numIngredientsController;
+
     return CardBasicHelper(
         height: size.height * 0.27,
         width: size.width,
@@ -24,17 +30,20 @@ class _NumberIngredientsViewState extends State<NumberIngredientsView> {
           child: Column(
             mainAxisAlignment: MainAxisAlignment.spaceAround,
             children: [
-              //TODO: traducir
               _title(size),
               _textField(color),
               Row(
                 mainAxisAlignment: MainAxisAlignment.start,
                 children: [
-                  _button(size, Icons.check, color, () {}),
+                  _button(size, Icons.check, color, () {
+                    _provider.hideKeyboard(context);
+                  }),
                   SizedBox(
                     width: size.width * 0.055,
                   ),
-                  _button(size, Icons.delete, Colors.red, () {}),
+                  _button(size, Icons.delete, Colors.red, () {
+                    _provider.clearNumIngredients();
+                  }),
                 ],
               )
             ],

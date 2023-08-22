@@ -1,21 +1,24 @@
 class QueryModel {
   final String? _keyWord;
+  final String? _numIngredients;
   final List<String>? _diet;
   final List<String>? _health;
-  final List<String>? _cuisineType;
+  final String? _cuisineType;
   final List<String>? _mealType;
-  final List<String>? _dishType;
+  final String? _dishType;
   final String? _calories;
 
   QueryModel(
       {required String? keyWord,
+      String? numIngredients,
       List<String>? diet,
       List<String>? health,
-      List<String>? cuisineType,
+      String? cuisineType,
       List<String>? mealType,
-      List<String>? dishType,
+      String? dishType,
       String? calories})
       : _calories = calories,
+        _numIngredients = numIngredients,
         _dishType = dishType,
         _mealType = mealType,
         _cuisineType = cuisineType,
@@ -26,6 +29,12 @@ class QueryModel {
   Map<String, dynamic> toMap() {
     Map<String, dynamic> result = {'q': _keyWord};
 
+    if (_numIngredients != null) {
+      result['ingr'] = _numIngredients;
+    }
+    if (_calories != null) {
+      result['calories'] = _calories;
+    }
     if (_diet != null) {
       result['diet'] = _diet;
     }

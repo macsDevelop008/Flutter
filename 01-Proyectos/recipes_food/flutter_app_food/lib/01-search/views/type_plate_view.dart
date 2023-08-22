@@ -1,4 +1,6 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_app_food/01-search/services/search_service.dart';
+import 'package:provider/provider.dart';
 
 import '../helpers/helpers.dart';
 
@@ -10,31 +12,16 @@ class TypePlateView extends StatefulWidget {
 }
 
 class _TypePlateViewState extends State<TypePlateView> {
-  final _items = [
-    DropdownMenuItem(
-      value: 0,
-      child: Text(
-        "Seleccione una opcion",
-        style: TextStyle(color: Colors.black.withOpacity(0.3)),
-      ),
-    ),
-    DropdownMenuItem(
-      value: "hola",
-      child: Text("hola"),
-    ),
-    DropdownMenuItem(
-      value: "hola2",
-      child: Text("hola2"),
-    ),
-    DropdownMenuItem(
-      value: "hola3",
-      child: Text("hola3"),
-    ),
-  ];
-  Object? _value = 0;
+  late List<DropdownMenuItem<Object>>? _items;
+  late SearchService _searchService;
+  late Object? _value;
 
   @override
   Widget build(BuildContext context) {
+    _searchService = Provider.of<SearchService>(context);
+    _items = _searchService.listTypePlate;
+    _value = _searchService.selectedTypePlate;
+
     var size = MediaQuery.of(context).size;
     Color color = Theme.of(context).primaryColor;
     return CardBasicHelper(
@@ -50,7 +37,6 @@ class _TypePlateViewState extends State<TypePlateView> {
                 height: size.height * 0.018,
               ),
               //*Titulo
-              //TODO: Implementar traductor
               Container(
                   alignment: Alignment.center,
                   height: size.height * 0.05,
@@ -84,9 +70,10 @@ class _TypePlateViewState extends State<TypePlateView> {
           value: _value,
           items: _items,
           onChanged: (value) {
-            setState(() {
+            _searchService.selectedTypePlate = value;
+            /*setState(() {
               _value = value;
-            });
+            });*/
           },
           icon: const Icon(Icons.arrow_downward),
           isExpanded: true,
