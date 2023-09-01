@@ -1,3 +1,4 @@
+import 'package:animate_do/animate_do.dart';
 import 'package:flutter/material.dart';
 import 'package:carousel_slider/carousel_slider.dart';
 import 'package:provider/provider.dart';
@@ -34,12 +35,15 @@ class CarouselDataWidget extends StatelessWidget {
   }
 
   Widget _part(Widget child, Size size) {
-    return Container(
-      alignment: Alignment.center,
-      color: Colors.transparent,
-      width: size.width * 0.9,
-      height: size.height * 0.05,
-      child: child,
+    return FadeIn(
+      delay: const Duration(milliseconds: 150),
+      child: Container(
+        alignment: Alignment.center,
+        color: Colors.transparent,
+        width: size.width * 0.9,
+        height: size.height * 0.05,
+        child: child,
+      ),
     );
   }
 
@@ -127,7 +131,7 @@ class CarouselDataWidget extends StatelessWidget {
         ),
         //TODO: cambiar segun el idioma
         Text(
-          'App desarrollada por Miguel Cuellar a modo de práctica, los comentarios se agradecen :D (otros créditos en el apartado de opciones).',
+          'App desarrollada por Miguel Cuellar a modo de práctica, los comentarios se agradecen :D (Las consultas se hacen a través de una API gratuita, por ello los resultados no son muy acertados).',
           textAlign: TextAlign.center,
           style: TextStyle(
               fontFamily: 'Roboto',

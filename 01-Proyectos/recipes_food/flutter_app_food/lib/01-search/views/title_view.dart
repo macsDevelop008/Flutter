@@ -1,3 +1,4 @@
+import 'package:animate_do/animate_do.dart';
 import 'package:flutter/material.dart';
 
 class TitleView extends StatelessWidget {
@@ -6,10 +7,12 @@ class TitleView extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     var size = MediaQuery.of(context).size;
-    return Text(
-      'Opciones de búsqueda',
-      textAlign: TextAlign.center,
-      style: TextStyle(fontFamily: 'Harabara', fontSize: size.width * 0.07),
+    return FadeInDown(
+      child: Text(
+        'Opciones de búsqueda',
+        textAlign: TextAlign.center,
+        style: TextStyle(fontFamily: 'Harabara', fontSize: size.width * 0.07),
+      ),
     );
   }
 }

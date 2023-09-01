@@ -1,3 +1,4 @@
+import 'package:animate_do/animate_do.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_app_food/01-search/models/models.dart';
 import 'package:flutter_app_food/01-search/services/search_service.dart';
@@ -12,7 +13,7 @@ class RecipeResultScreen extends StatelessWidget {
   const RecipeResultScreen({super.key});
 
   Future<bool> _onWillPop() async {
-    return false; //<-- SEE HERE
+    return false;
   }
 
   @override
@@ -65,55 +66,59 @@ class RecipeResultScreen extends StatelessWidget {
     );
   }
 
-  Container _titleButton(Size size, Color color, BuildContext context) {
-    return Container(
-      alignment: Alignment.centerLeft,
-      color: Colors.transparent,
-      width: double.infinity,
-      height: size.height * 0.07,
-      child: Padding(
-        padding: EdgeInsets.symmetric(horizontal: size.width * 0.05),
-        child: Row(
-          mainAxisAlignment: MainAxisAlignment.spaceBetween,
-          children: [
-            Text(
-              'Resultados',
-              style: TextStyle(
-                  fontFamily: 'Harabara', fontSize: size.width * 0.07),
-            ),
-            _button(size, Icons.arrow_back, color, () async {
-              var provider =
-                  Provider.of<RecipeResultService>(context, listen: false);
-              provider.backToSearch(context);
-              /*var a = await provider
-                  .caculateData(QueryModel(keyWord: 'pollo, perro'));
-              print(a);*/
-              //llega [] cuando no hay data
-            }),
-          ],
+  FadeInUp _titleButton(Size size, Color color, BuildContext context) {
+    return FadeInUp(
+      child: Container(
+        alignment: Alignment.centerLeft,
+        color: Colors.transparent,
+        width: double.infinity,
+        height: size.height * 0.07,
+        child: Padding(
+          padding: EdgeInsets.symmetric(horizontal: size.width * 0.05),
+          child: Row(
+            mainAxisAlignment: MainAxisAlignment.spaceBetween,
+            children: [
+              Text(
+                'Resultados',
+                style: TextStyle(
+                    fontFamily: 'Harabara', fontSize: size.width * 0.07),
+              ),
+              _button(size, Icons.arrow_back, color, () async {
+                var provider =
+                    Provider.of<RecipeResultService>(context, listen: false);
+                provider.backToSearch(context);
+                /*var a = await provider
+                    .caculateData(QueryModel(keyWord: 'pollo, perro'));
+                print(a);*/
+                //llega [] cuando no hay data
+              }),
+            ],
+          ),
         ),
       ),
     );
   }
 
-  Container _button(
+  ElasticIn _button(
       Size size, IconData iconData, Color iconColor, Function()? funtction) {
-    return Container(
-      decoration: BoxDecoration(shape: BoxShape.circle, boxShadow: [
-        BoxShadow(
-            color: Colors.black.withOpacity(0.2),
-            blurRadius: 4,
-            spreadRadius: 1)
-      ]),
-      child: CircleAvatar(
-        backgroundColor: Colors.white,
-        radius: size.width * 0.055,
-        child: IconButton(
-          onPressed: funtction,
-          icon: Icon(
-            iconData,
-            color: iconColor,
-            size: size.width * 0.07,
+    return ElasticIn(
+      child: Container(
+        decoration: BoxDecoration(shape: BoxShape.circle, boxShadow: [
+          BoxShadow(
+              color: Colors.black.withOpacity(0.2),
+              blurRadius: 4,
+              spreadRadius: 1)
+        ]),
+        child: CircleAvatar(
+          backgroundColor: Colors.white,
+          radius: size.width * 0.055,
+          child: IconButton(
+            onPressed: funtction,
+            icon: Icon(
+              iconData,
+              color: iconColor,
+              size: size.width * 0.07,
+            ),
           ),
         ),
       ),
@@ -191,7 +196,7 @@ class RecipeResultScreen extends StatelessWidget {
   }
 
   Future<Widget> _dataResult(BuildContext context, Size size) async {
-    List<ResultCardWidget> result = [];
+    List<Widget> result = [];
     var providerSearch = Provider.of<SearchService>(context, listen: false);
     var providerResult =
         Provider.of<RecipeResultService>(context, listen: false);
@@ -259,12 +264,14 @@ class RecipeResultScreen extends StatelessWidget {
     //print(queryResult);
     if (queryResult != null && queryResult.isNotEmpty) {
       for (var element in queryResult) {
-        result.add(ResultCardWidget(
-            tile: element.name,
-            urlRecipe: element.url,
-            urlImage: element.image,
-            calories: element.calories,
-            fuente: element.source));
+        result.add(FadeInLeft(
+          child: ResultCardWidget(
+              tile: element.name,
+              urlRecipe: element.url,
+              urlImage: element.image,
+              calories: element.calories,
+              fuente: element.source),
+        ));
       }
     }
 

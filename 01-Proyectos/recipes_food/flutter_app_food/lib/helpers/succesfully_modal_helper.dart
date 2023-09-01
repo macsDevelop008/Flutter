@@ -1,3 +1,4 @@
+import 'package:animate_do/animate_do.dart';
 import 'package:flutter/material.dart';
 
 succesFullyModalHelper(
@@ -6,44 +7,46 @@ succesFullyModalHelper(
       context: context,
       barrierDismissible: false,
       builder: (context) {
-        return AlertDialog(
-          elevation: 0,
-          contentPadding: EdgeInsets.zero,
-          backgroundColor: Colors.transparent,
-          content: Column(
-            mainAxisAlignment: MainAxisAlignment.center,
-            children: [
-              Container(
-                color: Colors.transparent,
-                height: size.height * 0.42,
-                width: size.width * 0.9,
-                child: Stack(
-                  alignment: Alignment.bottomCenter,
-                  children: [
-                    //*Base
-                    _base(size, context),
-                    //*Circulo decoración
-                    _circleDecoration(size, context),
-                    //*Texto
-                    _text(size, text)
-                  ],
-                ),
-              ),
-              SizedBox(
-                height: size.height * 0.1,
-              ),
-              //*Botones - Acciones
-              Row(
-                mainAxisAlignment: MainAxisAlignment.center,
-                children: [
-                  _buttonClose(size, context),
-                  SizedBox(
-                    height: size.width * 0.1,
+        return ElasticIn(
+          child: AlertDialog(
+            elevation: 0,
+            contentPadding: EdgeInsets.zero,
+            backgroundColor: Colors.transparent,
+            content: Column(
+              mainAxisAlignment: MainAxisAlignment.center,
+              children: [
+                Container(
+                  color: Colors.transparent,
+                  height: size.height * 0.42,
+                  width: size.width * 0.9,
+                  child: Stack(
+                    alignment: Alignment.bottomCenter,
+                    children: [
+                      //*Base
+                      _base(size, context),
+                      //*Circulo decoración
+                      _circleDecoration(size, context),
+                      //*Texto
+                      _text(size, text)
+                    ],
                   ),
-                  _buttonConfirm(size, context, function)
-                ],
-              )
-            ],
+                ),
+                SizedBox(
+                  height: size.height * 0.1,
+                ),
+                //*Botones - Acciones
+                Row(
+                  mainAxisAlignment: MainAxisAlignment.center,
+                  children: [
+                    _buttonClose(size, context),
+                    SizedBox(
+                      height: size.width * 0.1,
+                    ),
+                    _buttonConfirm(size, context, function)
+                  ],
+                )
+              ],
+            ),
           ),
         );
       });

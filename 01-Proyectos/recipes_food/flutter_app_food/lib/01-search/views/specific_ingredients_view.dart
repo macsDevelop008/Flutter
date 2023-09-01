@@ -1,3 +1,4 @@
+import 'package:animate_do/animate_do.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_app_food/01-search/services/search_service.dart';
 import 'package:provider/provider.dart';
@@ -23,34 +24,36 @@ class _SpecificIngredientsViewState extends State<SpecificIngredientsView> {
     _provider = Provider.of<SearchService>(context);
     _textKeyWordController = _provider.keyWordController;
 
-    return CardBasicHelper(
-      height: size.height * 0.3,
-      width: size.width,
-      child: Padding(
-        padding: EdgeInsets.symmetric(horizontal: size.width * 0.05),
-        child: Column(
-          mainAxisAlignment: MainAxisAlignment.spaceAround,
-          children: [
-            //*Titulo
-            _title(size),
-            //*TextField
-            _textField(color),
-            //*Botones
-            Row(
-              mainAxisAlignment: MainAxisAlignment.start,
-              children: [
-                _button(size, Icons.check, color, () {
-                  _provider.hideKeyboard(context);
-                }),
-                SizedBox(
-                  width: size.width * 0.055,
-                ),
-                _button(size, Icons.delete, Colors.red, () {
-                  _provider.clearKeyWord();
-                }),
-              ],
-            )
-          ],
+    return FadeInLeft(
+      child: CardBasicHelper(
+        height: size.height * 0.3,
+        width: size.width,
+        child: Padding(
+          padding: EdgeInsets.symmetric(horizontal: size.width * 0.05),
+          child: Column(
+            mainAxisAlignment: MainAxisAlignment.spaceAround,
+            children: [
+              //*Titulo
+              _title(size),
+              //*TextField
+              _textField(color),
+              //*Botones
+              Row(
+                mainAxisAlignment: MainAxisAlignment.start,
+                children: [
+                  _button(size, Icons.check, color, () {
+                    _provider.hideKeyboard(context);
+                  }),
+                  SizedBox(
+                    width: size.width * 0.055,
+                  ),
+                  _button(size, Icons.delete, Colors.red, () {
+                    _provider.clearKeyWord();
+                  }),
+                ],
+              )
+            ],
+          ),
         ),
       ),
     );

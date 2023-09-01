@@ -1,3 +1,4 @@
+import 'package:animate_do/animate_do.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_app_food/00-initial/services/initial_service.dart';
 import 'package:provider/provider.dart';
@@ -14,17 +15,21 @@ class PointsCarouselWidget extends StatelessWidget {
     return Container(
       alignment: Alignment.center,
       child: Row(mainAxisAlignment: MainAxisAlignment.center, children: [
-        _Point(
-          size: size,
-          offColor: offColor,
-          myNumOfCarousel: 0,
-          onColor: onColor,
+        ElasticIn(
+          child: _Point(
+            size: size,
+            offColor: offColor,
+            myNumOfCarousel: 0,
+            onColor: onColor,
+          ),
         ),
-        _Point(
-          size: size,
-          offColor: offColor,
-          myNumOfCarousel: 1,
-          onColor: onColor,
+        ElasticIn(
+          child: _Point(
+            size: size,
+            offColor: offColor,
+            myNumOfCarousel: 1,
+            onColor: onColor,
+          ),
         ),
       ]),
     );

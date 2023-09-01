@@ -1,3 +1,4 @@
+import 'package:animate_do/animate_do.dart';
 import 'package:flutter/material.dart';
 
 import '../ui/ui.dart';
@@ -108,15 +109,17 @@ class SearchScreen extends StatelessWidget {
   }
 
   Widget _requiredText(Size size) {
-    return Container(
-      color: Colors.transparent,
-      width: double.infinity,
-      child: Padding(
-        padding: EdgeInsets.only(left: size.width * 0.05),
-        child: Text(
-          'Obligatorio',
-          textAlign: TextAlign.start,
-          style: TextStyle(color: Colors.redAccent),
+    return FadeInLeft(
+      child: Container(
+        color: Colors.transparent,
+        width: double.infinity,
+        child: Padding(
+          padding: EdgeInsets.only(left: size.width * 0.05),
+          child: Text(
+            'Obligatorio',
+            textAlign: TextAlign.start,
+            style: TextStyle(color: Colors.redAccent),
+          ),
         ),
       ),
     );

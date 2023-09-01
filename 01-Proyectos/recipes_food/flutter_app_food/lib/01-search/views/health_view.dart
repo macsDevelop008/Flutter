@@ -1,3 +1,4 @@
+import 'package:animate_do/animate_do.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_app_food/01-search/models/models.dart';
 import 'package:multi_select_flutter/multi_select_flutter.dart';
@@ -34,47 +35,49 @@ class _HealthViewState extends State<HealthView> {
 
     var size = MediaQuery.of(context).size;
     Color color = Theme.of(context).primaryColor;
-    return CardBasicHelper(
-      height: size.height * 0.3,
-      width: size.width,
-      child: Padding(
-        padding: EdgeInsets.symmetric(horizontal: size.width * 0.05),
-        child: Column(
-          mainAxisAlignment: MainAxisAlignment.start,
-          children: [
-            //Espacio
-            SizedBox(
-              height: size.height * 0.018,
-            ),
-            //*Titulo
-            Container(
-                alignment: Alignment.center,
-                height: size.height * 0.05,
-                width: double.infinity,
-                color: Colors.transparent,
-                child: Row(
-                  mainAxisAlignment: MainAxisAlignment.start,
-                  children: [
-                    _button(size, Icons.delete, Colors.redAccent, () {
-                      _serviceProvider.clearHealt();
-                    }),
-                    SizedBox(
-                      width: size.width * 0.185,
-                    ),
-                    _title(size),
-                  ],
-                )),
-            //Espacio
-            SizedBox(
-              height: size.height * 0.03,
-            ),
-            //*Seleccion de items
-            Container(
-                width: double.infinity,
-                height: size.height * 0.18,
-                color: Colors.transparent,
-                child: _selectItems(color, size)),
-          ],
+    return FadeInLeft(
+      child: CardBasicHelper(
+        height: size.height * 0.3,
+        width: size.width,
+        child: Padding(
+          padding: EdgeInsets.symmetric(horizontal: size.width * 0.05),
+          child: Column(
+            mainAxisAlignment: MainAxisAlignment.start,
+            children: [
+              //Espacio
+              SizedBox(
+                height: size.height * 0.018,
+              ),
+              //*Titulo
+              Container(
+                  alignment: Alignment.center,
+                  height: size.height * 0.05,
+                  width: double.infinity,
+                  color: Colors.transparent,
+                  child: Row(
+                    mainAxisAlignment: MainAxisAlignment.start,
+                    children: [
+                      _button(size, Icons.delete, Colors.redAccent, () {
+                        _serviceProvider.clearHealt();
+                      }),
+                      SizedBox(
+                        width: size.width * 0.185,
+                      ),
+                      _title(size),
+                    ],
+                  )),
+              //Espacio
+              SizedBox(
+                height: size.height * 0.03,
+              ),
+              //*Seleccion de items
+              Container(
+                  width: double.infinity,
+                  height: size.height * 0.18,
+                  color: Colors.transparent,
+                  child: _selectItems(color, size)),
+            ],
+          ),
         ),
       ),
     );

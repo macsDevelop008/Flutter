@@ -1,3 +1,4 @@
+import 'package:animate_do/animate_do.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_app_food/01-search/services/search_service.dart';
 import 'package:provider/provider.dart';
@@ -24,38 +25,41 @@ class _TypePlateViewState extends State<TypePlateView> {
 
     var size = MediaQuery.of(context).size;
     Color color = Theme.of(context).primaryColor;
-    return CardBasicHelper(
-        height: size.height * 0.2,
-        width: size.width,
-        child: Padding(
-          padding: EdgeInsets.symmetric(horizontal: size.width * 0.05),
-          child: Column(
-            mainAxisAlignment: MainAxisAlignment.start,
-            children: [
-              //Espacio
-              SizedBox(
-                height: size.height * 0.018,
-              ),
-              //*Titulo
-              Container(
-                  alignment: Alignment.center,
-                  height: size.height * 0.05,
-                  color: Colors.transparent,
-                  child: _title(size)),
-              //Espacio
-              SizedBox(
-                height: size.height * 0.02,
-              ),
-              //*Seleccion de items
-              Container(
-                  alignment: Alignment.center,
-                  width: double.infinity,
-                  height: size.height * 0.08,
-                  color: Colors.transparent,
-                  child: _dropdownButton(color, size)),
-            ],
-          ),
-        ));
+
+    return FadeInLeft(
+      child: CardBasicHelper(
+          height: size.height * 0.2,
+          width: size.width,
+          child: Padding(
+            padding: EdgeInsets.symmetric(horizontal: size.width * 0.05),
+            child: Column(
+              mainAxisAlignment: MainAxisAlignment.start,
+              children: [
+                //Espacio
+                SizedBox(
+                  height: size.height * 0.018,
+                ),
+                //*Titulo
+                Container(
+                    alignment: Alignment.center,
+                    height: size.height * 0.05,
+                    color: Colors.transparent,
+                    child: _title(size)),
+                //Espacio
+                SizedBox(
+                  height: size.height * 0.02,
+                ),
+                //*Seleccion de items
+                Container(
+                    alignment: Alignment.center,
+                    width: double.infinity,
+                    height: size.height * 0.08,
+                    color: Colors.transparent,
+                    child: _dropdownButton(color, size)),
+              ],
+            ),
+          )),
+    );
   }
 
   Container _dropdownButton(Color color, Size size) {

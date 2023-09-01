@@ -1,3 +1,4 @@
+import 'package:animate_do/animate_do.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_app_food/01-search/services/search_service.dart';
 import 'package:flutter_app_food/helpers/helpers.dart';
@@ -43,15 +44,17 @@ class ActionButtonsView extends StatelessWidget {
     );
   }
 
-  FloatingActionButton _button(Color color, Size size, Function()? function,
-      IconData icon, String heroTag) {
-    return FloatingActionButton(
-      heroTag: heroTag,
-      onPressed: function,
-      backgroundColor: color,
-      child: Icon(
-        icon,
-        size: size.width * 0.08,
+  ElasticIn _button(Color color, Size size, Function()? function, IconData icon,
+      String heroTag) {
+    return ElasticIn(
+      child: FloatingActionButton(
+        heroTag: heroTag,
+        onPressed: function,
+        backgroundColor: color,
+        child: Icon(
+          icon,
+          size: size.width * 0.08,
+        ),
       ),
     );
   }

@@ -1,3 +1,4 @@
+import 'package:animate_do/animate_do.dart';
 import 'package:flutter/material.dart';
 
 errorModalHelper(BuildContext context, Size size, String text) {
@@ -5,34 +6,36 @@ errorModalHelper(BuildContext context, Size size, String text) {
       context: context,
       barrierDismissible: false,
       builder: (context) {
-        return AlertDialog(
-          elevation: 0,
-          contentPadding: EdgeInsets.zero,
-          backgroundColor: Colors.transparent,
-          content: Column(
-            mainAxisAlignment: MainAxisAlignment.center,
-            children: [
-              Container(
-                color: Colors.transparent,
-                height: size.height * 0.42,
-                width: size.width * 0.9,
-                child: Stack(
-                  alignment: Alignment.bottomCenter,
-                  children: [
-                    //*Base
-                    _base(size, context),
-                    //*Circulo decoración
-                    _circleDecoration(size, context),
-                    //*Texto
-                    _text(size, text)
-                  ],
+        return ElasticIn(
+          child: AlertDialog(
+            elevation: 0,
+            contentPadding: EdgeInsets.zero,
+            backgroundColor: Colors.transparent,
+            content: Column(
+              mainAxisAlignment: MainAxisAlignment.center,
+              children: [
+                Container(
+                  color: Colors.transparent,
+                  height: size.height * 0.42,
+                  width: size.width * 0.9,
+                  child: Stack(
+                    alignment: Alignment.bottomCenter,
+                    children: [
+                      //*Base
+                      _base(size, context),
+                      //*Circulo decoración
+                      _circleDecoration(size, context),
+                      //*Texto
+                      _text(size, text)
+                    ],
+                  ),
                 ),
-              ),
-              SizedBox(
-                height: size.height * 0.1,
-              ),
-              _buttonClose(size, context)
-            ],
+                SizedBox(
+                  height: size.height * 0.1,
+                ),
+                _buttonClose(size, context)
+              ],
+            ),
           ),
         );
       });

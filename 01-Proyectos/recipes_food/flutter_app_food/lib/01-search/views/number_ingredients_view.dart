@@ -1,3 +1,4 @@
+import 'package:animate_do/animate_do.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_app_food/01-search/services/search_service.dart';
 import 'package:provider/provider.dart';
@@ -22,33 +23,35 @@ class _NumberIngredientsViewState extends State<NumberIngredientsView> {
     _provider = Provider.of<SearchService>(context);
     _textNumIngredientsController = _provider.numIngredientsController;
 
-    return CardBasicHelper(
-        height: size.height * 0.27,
-        width: size.width,
-        child: Padding(
-          padding: EdgeInsets.symmetric(horizontal: size.width * 0.05),
-          child: Column(
-            mainAxisAlignment: MainAxisAlignment.spaceAround,
-            children: [
-              _title(size),
-              _textField(color),
-              Row(
-                mainAxisAlignment: MainAxisAlignment.start,
-                children: [
-                  _button(size, Icons.check, color, () {
-                    _provider.hideKeyboard(context);
-                  }),
-                  SizedBox(
-                    width: size.width * 0.055,
-                  ),
-                  _button(size, Icons.delete, Colors.red, () {
-                    _provider.clearNumIngredients();
-                  }),
-                ],
-              )
-            ],
-          ),
-        ));
+    return FadeInLeft(
+      child: CardBasicHelper(
+          height: size.height * 0.27,
+          width: size.width,
+          child: Padding(
+            padding: EdgeInsets.symmetric(horizontal: size.width * 0.05),
+            child: Column(
+              mainAxisAlignment: MainAxisAlignment.spaceAround,
+              children: [
+                _title(size),
+                _textField(color),
+                Row(
+                  mainAxisAlignment: MainAxisAlignment.start,
+                  children: [
+                    _button(size, Icons.check, color, () {
+                      _provider.hideKeyboard(context);
+                    }),
+                    SizedBox(
+                      width: size.width * 0.055,
+                    ),
+                    _button(size, Icons.delete, Colors.red, () {
+                      _provider.clearNumIngredients();
+                    }),
+                  ],
+                )
+              ],
+            ),
+          )),
+    );
   }
 
   Text _title(Size size) {
