@@ -1,3 +1,0 @@
-storePassword -> 38fc16e6
-keyPassword -> 38fc16e6
-keyAlias -> flavor_finder
